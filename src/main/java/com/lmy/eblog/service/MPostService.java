@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lmy.eblog.entity.MPost;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lmy.eblog.vo.PageVo;
+import com.lmy.eblog.vo.PostVo;
 
 /**
  * <p>
@@ -16,5 +16,7 @@ import com.lmy.eblog.vo.PageVo;
  */
 public interface MPostService extends IService<MPost> {
 
-    IPage<PageVo> paging(Page page, Long categoryId, Long userId, Integer level, Boolean recommend, String order);
+    IPage<PostVo> paging(Page page, Long categoryId, Long userId, Integer level, Boolean recommend, String order);
+
+    PostVo selectPostDetail(Long id);
 }

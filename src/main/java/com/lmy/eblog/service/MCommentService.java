@@ -1,7 +1,10 @@
 package com.lmy.eblog.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lmy.eblog.entity.MComment;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lmy.eblog.vo.CommentVo;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface MCommentService extends IService<MComment> {
 
+    IPage<CommentVo> selectPageComments(Page page, Long postId, Long userId, String order);
 }

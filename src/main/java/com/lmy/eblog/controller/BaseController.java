@@ -7,9 +7,12 @@ package com.lmy.eblog.controller;
  * @version V1.0
  */
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lmy.eblog.service.MCommentService;
 import com.lmy.eblog.service.MPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,5 +30,15 @@ public class BaseController {
 
     @Autowired
     MPostService mPostServiceImpl;
+
+    @Autowired
+    MCommentService mCommentServiceImpl;
+
+    public Page getPage() {
+        int pn = ServletRequestUtils.getIntParameter(req, "pn", 1);
+        int size = ServletRequestUtils.getIntParameter(req, "size", 2);
+        // 分页查询博客
+        return new Page(pn, size);
+    }
 
 }

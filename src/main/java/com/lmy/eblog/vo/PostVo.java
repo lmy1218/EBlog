@@ -17,7 +17,7 @@ import lombok.Data;
  * @date 2020/10/1 12:08
  **/
 @Data
-public class PageVo extends MPost {
+public class PostVo extends MPost {
     // 发布者ID
     private Long authorId;
     // 发布者名称

@@ -7,7 +7,12 @@ package com.lmy.eblog.controller;
  * @version V1.0
  */
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.lmy.eblog.vo.CommentVo;
+import com.lmy.eblog.vo.PostVo;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -28,7 +33,10 @@ public class PostController extends BaseController {
      */
     @GetMapping("/category/{id:\\d*}")
     public String category(@PathVariable(name = "id") Long id) {
+        int pn = ServletRequestUtils.getIntParameter(req, "pn", 1);
+
         req.setAttribute("currentCategoryId", id);
+        req.setAttribute("pn", pn);
         return "post/category";
     }
 
@@ -40,6 +48,20 @@ public class PostController extends BaseController {
      */
     @GetMapping("/post/{id:\\d*}")
     public String detail(@PathVariable(name = "id") Long id) {
+        // 查询博客详情
+        PostVo post = mPostServiceImpl.selectPostDetail(id);
+        // 断言
+        Assert.notNull(post, "文章不存在！");
+        // 查询评论信息
+        // 参数： 分页   文章ID    用户ID    排序
+        IPage<CommentVo> comments = mCommentServiceImpl.selectPageComments(getPage(), post.getId(), null, "created");
+        // 断言
+        Assert.notNull(comments, "无评论信息");
+
+        // 将结果集放入response作用域
+        req.setAttribute("comments", comments);
+        req.setAttribute("post", post);
+        req.setAttribute("currentCategoryId", post.getCategoryId());
         return "post/detail";
     }
 

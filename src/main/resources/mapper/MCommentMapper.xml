@@ -2,4 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lmy.eblog.mapper.MCommentMapper">
 
+    <select id="selectComments" resultType="com.lmy.eblog.vo.CommentVo">
+        select mc.*, mu.id as authorId, mu.username as authorName, mu.avatar as authorAvatar
+            from m_comment mc
+                left join m_user mu on mc.user_id = mu.id
+            ${ew.customSqlSegment}
+    </select>
 </mapper>
