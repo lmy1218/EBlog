@@ -1,5 +1,6 @@
 package com.lmy.eblog.config;
 
+import com.lmy.eblog.templates.HotsTemplate;
 import com.lmy.eblog.templates.PostsTemplate;
 import com.lmy.eblog.templates.TimeAgoMethod;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,15 @@ public class FreemarkerConfig {
     @Autowired
     private PostsTemplate postsTemplate;
 
-
+    @Autowired
+    private HotsTemplate hotsTemplate;
 
 
     @PostConstruct
     public void setUp() {
         configuration.setSharedVariable("timeAgo", new TimeAgoMethod());
         configuration.setSharedVariable("posts", postsTemplate);
+        configuration.setSharedVariable("hots", hotsTemplate);
     }
 
 }

@@ -19,4 +19,6 @@ public interface MPostService extends IService<MPost> {
     IPage<PostVo> paging(Page page, Long categoryId, Long userId, Integer level, Boolean recommend, String order);
 
     PostVo selectPostDetail(Long id);
+
+    void initWeekRank();
 }

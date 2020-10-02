@@ -114,49 +114,18 @@
             </dd>
         </dl>
     </div>
-
+    <#--本周热议-->
     <dl class="fly-panel fly-list-one">
         <dt class="fly-panel-title">本周热议</dt>
-        <dd>
-            <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-            <span><i class="iconfont icon-pinglun1"></i> 16</span>
-        </dd>
-        <dd>
-            <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-            <span><i class="iconfont icon-pinglun1"></i> 16</span>
-        </dd>
-        <dd>
-            <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-            <span><i class="iconfont icon-pinglun1"></i> 16</span>
-        </dd>
-        <dd>
-            <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-            <span><i class="iconfont icon-pinglun1"></i> 16</span>
-        </dd>
-        <dd>
-            <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-            <span><i class="iconfont icon-pinglun1"></i> 16</span>
-        </dd>
-        <dd>
-            <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-            <span><i class="iconfont icon-pinglun1"></i> 16</span>
-        </dd>
-        <dd>
-            <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-            <span><i class="iconfont icon-pinglun1"></i> 16</span>
-        </dd>
-        <dd>
-            <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-            <span><i class="iconfont icon-pinglun1"></i> 16</span>
-        </dd>
-        <dd>
-            <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-            <span><i class="iconfont icon-pinglun1"></i> 16</span>
-        </dd>
-        <dd>
-            <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-            <span><i class="iconfont icon-pinglun1"></i> 16</span>
-        </dd>
+        <@hots>
+            <#list results as post>
+                <dd>
+                    <a href="/post/${post.id}">${post.title}</a>
+                    <span><i class="iconfont icon-pinglun1"></i> ${post.commentCount}</span>
+                </dd>
+            </#list>
+        </@hots>
+
 
         <!-- 无数据时 -->
         <!--

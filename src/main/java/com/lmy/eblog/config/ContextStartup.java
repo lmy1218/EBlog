@@ -10,6 +10,7 @@ package com.lmy.eblog.config;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.lmy.eblog.entity.MCategory;
 import com.lmy.eblog.service.MCategoryService;
+import com.lmy.eblog.service.MPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -31,6 +32,9 @@ public class ContextStartup implements ApplicationRunner, ServletContextAware {
     @Autowired
     private MCategoryService mCategoryServiceImpl;
 
+    @Autowired
+    private MPostService mPostServiceImpl;
+
     private ServletContext servletContext;
 
     /**
@@ -45,6 +49,10 @@ public class ContextStartup implements ApplicationRunner, ServletContextAware {
                 .select("id", "name");
         List<MCategory> categories = mCategoryServiceImpl.list(wrapper);
         servletContext.setAttribute("categorys", categories);
+
+        // 初始化本周热议博客
+        mPostServiceImpl.initWeekRank();
+
     }
 
     @Override
