@@ -1,7 +1,9 @@
 package com.lmy.eblog.service;
 
+import com.lmy.eblog.dto.ResultDto;
 import com.lmy.eblog.entity.MUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lmy.eblog.shiro.UserInfo;
 
 /**
  * <p>
@@ -13,4 +15,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface MUserService extends IService<MUser> {
 
+    ResultDto<Void> insUser(MUser user);
+
+    UserInfo login(String username, String password);
 }

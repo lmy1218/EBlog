@@ -1,10 +1,15 @@
 package com.lmy.eblog.entity;
 
 import java.time.LocalDateTime;
+import java.util.Date;
+
 import com.lmy.eblog.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 /**
  * <p>
@@ -24,16 +29,20 @@ public class MUser extends BaseEntity {
     /**
      * 昵称
      */
+    @NotBlank(message = "用户名不能为空")
     private String username;
 
     /**
      * 密码
      */
+    @NotBlank(message = "密码不能为空")
     private String password;
 
     /**
      * 邮件
      */
+    @Email
+    @NotBlank(message = "密码不能为空")
     private String email;
 
     /**
@@ -69,7 +78,7 @@ public class MUser extends BaseEntity {
     /**
      * 生日
      */
-    private LocalDateTime birthday;
+    private Date birthday;
 
     /**
      * 头像
@@ -89,7 +98,14 @@ public class MUser extends BaseEntity {
     /**
      * 最后的登陆时间
      */
-    private LocalDateTime lasted;
+    private Date lasted;
 
-
+    @Override
+    public String toString() {
+        return "MUser{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }
