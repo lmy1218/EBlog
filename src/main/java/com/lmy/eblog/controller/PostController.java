@@ -58,6 +58,8 @@ public class PostController extends BaseController {
         // 断言
         Assert.notNull(comments, "无评论信息");
 
+        mPostServiceImpl.putViewCount(post);
+
         // 将结果集放入response作用域
         req.setAttribute("comments", comments);
         req.setAttribute("post", post);

@@ -11,7 +11,7 @@ import com.lmy.eblog.vo.PostVo;
  *  服务类
  * </p>
  *
- * @author 公众号：java思维导图
+ * @author lmy
  * @since 2020-09-30
  */
 public interface MPostService extends IService<MPost> {
@@ -21,4 +21,8 @@ public interface MPostService extends IService<MPost> {
     PostVo selectPostDetail(Long id);
 
     void initWeekRank();
+
+    void addCommentCountforWeekRank(Long postId, boolean isAdd);
+
+    void putViewCount(PostVo post);
 }

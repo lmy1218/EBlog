@@ -129,6 +129,53 @@ public class MPostServiceImpl extends ServiceImpl<MPostMapper, MPost> implements
             redisUtil.hset(key, "post:id", post.getId(), expireTime);
             redisUtil.hset(key, "post:title", post.getTitle(), expireTime);
             redisUtil.hset(key, "post:commentCount", post.getCommentCount(), expireTime);
+            redisUtil.hset(key, "post:viewCount", post.getViewCount(), expireTime);
         }
     }
+
+
+    /**
+     * 当有新增评论时，更新缓存中评论的数量
+     * @param postId
+     * @param isAdd 是否是新增
+     */
+    @Override
+    public void addCommentCountforWeekRank(Long postId, boolean isAdd) {
+        // 当前时间的key
+        String currenkey = "day:rank:" + DateUtil.format(new Date(), DatePattern.PURE_DATE_FORMAT);
+        // 改变数量
+        redisUtil.zIncrementScore(currenkey, postId, isAdd ? 1 : -1);
+
+        MPost post = this.getById(postId);
+        // 7天后自动过期
+        long between = DateUtil.between(new Date(), post.getCreated(), DateUnit.DAY);
+        long expireTime = (7 - between) * 24 * 60 * 60;
+
+        // 缓存文章的基本信息
+        this.hashCachPost(post, expireTime);
+
+        // 重新做并集
+        this.zunionWeekRank();
+    }
+
+    /**
+     * 阅读量新增
+     * @param post
+     */
+    @Override
+    public void putViewCount(PostVo post) {
+        // 首相去redis中查询阅读数
+        String key = "rank:post:" + post.getId();
+        Integer viewCount = (Integer) redisUtil.hget(key, "post:viewCount");
+        if (viewCount != null) {
+            post.setViewCount(viewCount + 1);
+        } else {
+            post.setViewCount(post.getViewCount() + 1);
+        }
+
+        // 同步到缓存中
+        redisUtil.hset(key, "post:viewCount", post.getViewCount());
+    }
+
+
 }
