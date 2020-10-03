@@ -2,6 +2,8 @@ package com.lmy.eblog.mapper;
 
 import com.lmy.eblog.entity.MUserAction;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.lmy.eblog.vo.UserCommentVo;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface MUserActionMapper extends BaseMapper<MUserAction> {
 
+    UserCommentVo selectCommentInfo(@Param("postId") Long postId, @Param("commentId") Long commentId);
 }

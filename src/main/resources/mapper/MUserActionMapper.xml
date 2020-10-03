@@ -2,4 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lmy.eblog.mapper.MUserActionMapper">
 
+    <!--查询最近评论信息-->
+    <select id="selectCommentInfo" resultType="com.lmy.eblog.vo.UserCommentVo">
+        select p.id as postId, p.title as title, c.content as content, c.created as created
+            from m_post p left join m_comment c on p.id = c.post_id
+            where p.id = #{postId} and c.id = #{commentId}
+    </select>
 </mapper>

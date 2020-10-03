@@ -2,6 +2,9 @@ package com.lmy.eblog.service;
 
 import com.lmy.eblog.entity.MUserAction;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lmy.eblog.vo.UserCommentVo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface MUserActionService extends IService<MUserAction> {
 
+    List<UserCommentVo> selectList(Long postId);
 }

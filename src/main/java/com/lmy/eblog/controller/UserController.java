@@ -7,7 +7,14 @@ package com.lmy.eblog.controller;
  * @version V1.0
  */
 
+import com.lmy.eblog.service.MUserActionService;
+import com.lmy.eblog.vo.UserCommentVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 /**
  * @author Lmy
@@ -16,7 +23,23 @@ import org.springframework.stereotype.Controller;
  * @date 2020/10/3 22:56
  **/
 @Controller
+@RequestMapping("user")
 public class UserController extends BaseController {
+
+
+
+    /**
+     * 展示我的主页
+     * @return
+     */
+    @GetMapping("home")
+    public String home() {
+        // 展示最近评论
+        List<UserCommentVo> userCommentVo = mUserActionServiceImpl.selectList(getUserInfo().getId());
+
+        req.setAttribute("commentInfo", userCommentVo);
+        return "/user/home";
+    }
 
 
 
