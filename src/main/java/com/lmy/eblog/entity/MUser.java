@@ -7,6 +7,7 @@ import com.lmy.eblog.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -78,6 +79,7 @@ public class MUser extends BaseEntity {
     /**
      * 生日
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
 
     /**
@@ -99,6 +101,11 @@ public class MUser extends BaseEntity {
      * 最后的登陆时间
      */
     private Date lasted;
+
+    /**
+     * 城市
+     */
+    private String city;
 
     @Override
     public String toString() {

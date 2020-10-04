@@ -7,7 +7,7 @@
 
   <div class="layui-container fly-marginTop">
     <div class="fly-panel fly-panel-user" pad20>
-      <div class="layui-tab layui-tab-brief" lay-filter="user">
+      <div class="layui-tab layui-tab-brief form-center" lay-filter="user">
         <ul class="layui-tab-title">
           <li class="layui-this">登入</li>
           <li><a href="/register">注册</a></li>

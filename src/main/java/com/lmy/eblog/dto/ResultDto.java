@@ -44,7 +44,7 @@ public class ResultDto<T> implements Serializable {
     }
 
     public static ResultDto ok() {
-        return new ResultDto(200, "请求成功", null);
+        return new ResultDto(0, "请求成功", null);
     }
 
     public static <T> ResultDto success(T data) {
@@ -59,7 +59,7 @@ public class ResultDto<T> implements Serializable {
      * @return
      */
     public static <T> ResultDto success(String msg, T data) {
-        return new ResultDto(200, "请求成功", data);
+        return new ResultDto(0, "请求成功", data);
     }
 
     /**

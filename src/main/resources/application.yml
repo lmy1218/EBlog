@@ -13,8 +13,18 @@ spring:
       classic_compatible: true #处理空值
       datetime_format: yyyy-MM-dd HH:mm
       number_format: 0.##
+  servlet:
+    multipart:
+      max-file-size: 10000000
+      max-request-size: 20000000
   redis:
     host: 192.168.75.139
     port: 6379
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**Mapper.xml
+
+yun:
+  endpoint: https://oss-cn-shenzhen.aliyuncs.com
+  accessKeyId: LTAI4GDZpCFa7NtQY5RC7Qw3
+  accessKeySecret: bauRCDzYWcgvDvs0icLQLEhcHxV9TW
+  bucketName: ferryblog

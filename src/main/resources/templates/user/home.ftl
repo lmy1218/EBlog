@@ -5,29 +5,25 @@
 <@layout "首页" >
 
 <div class="fly-home fly-panel" style="background-image: url();">
-  <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt="贤心">
+  <img src="${user.avatar}" alt="${user.usernmae}">
   <i class="iconfont icon-renzheng" title="Fly社区认证"></i>
   <h1>
-    贤心
-    <i class="iconfont icon-nan"></i>
-    <!-- <i class="iconfont icon-nv"></i>  -->
+    ${user.usernmae}
+    <#if user.gender == 0>
+      <i class="iconfont icon-nan"></i>
+    <#else>
+      <i class="iconfont icon-nv"></i>
+    </#if>
     <i class="layui-badge fly-badge-vip">VIP3</i>
-    <!--
-    <span style="color:#c00;">（管理员）</span>
-    <span style="color:#5FB878;">（社区之光）</span>
-    <span>（该号已被封）</span>
-    -->
   </h1>
 
-  <p style="padding: 10px 0; color: #5FB878;">认证信息：layui 作者</p>
-
   <p class="fly-home-info">
-    <i class="iconfont icon-kiss" title="飞吻"></i><span style="color: #FF7200;">66666 飞吻</span>
-    <i class="iconfont icon-shijian"></i><span>2015-6-17 加入</span>
-    <i class="iconfont icon-chengshi"></i><span>来自杭州</span>
+    <i class="iconfont icon-kiss" title="飞吻"></i><span style="color: #FF7200;">I Love You!</span>
+    <i class="iconfont icon-shijian"></i><span>${user.created?string("yyyy-MM-dd")} 加入</span>
+    <i class="iconfont icon-chengshi"></i><span>${user.city!"来自地球"}</span>
   </p>
 
-  <p class="fly-home-sign">（人生仿若一场修行）</p>
+  <p class="fly-home-sign">（${user.sign!"这个人好像什么都没有留下！"}）</p>
 
   <div class="fly-sns" data-user="">
     <a href="javascript:;" class="layui-btn layui-btn-primary fly-imActive" data-type="addFriend">加为好友</a>
@@ -40,46 +36,24 @@
   <div class="layui-row layui-col-space15">
     <div class="layui-col-md6 fly-home-jie">
       <div class="fly-panel">
-        <h3 class="fly-panel-title">贤心 最近的提问</h3>
+        <h3 class="fly-panel-title">${user.username} 最近的提问</h3>
         <ul class="jie-row">
-          <li>
-            <span class="fly-jing">精</span>
-            <a href="" class="jie-title"> 基于 layui 的极简社区页面模版</a>
-            <i>刚刚</i>
-            <em class="layui-hide-xs">1136阅/27答</em>
-          </li>
-          <li>
-            <a href="" class="jie-title"> 基于 layui 的极简社区页面模版</a>
-            <i>1天前</i>
-            <em class="layui-hide-xs">1136阅/27答</em>
-          </li>
-          <li>
-            <a href="" class="jie-title"> 基于 layui 的极简社区页面模版</a>
-            <i>2017-10-30</i>
-            <em class="layui-hide-xs">1136阅/27答</em>
-          </li>
-          <li>
-            <a href="" class="jie-title"> 基于 layui 的极简社区页面模版</a>
-            <i>1天前</i>
-            <em class="layui-hide-xs">1136阅/27答</em>
-          </li>
-          <li>
-            <a href="" class="jie-title"> 基于 layui 的极简社区页面模版</a>
-            <i>1天前</i>
-            <em class="layui-hide-xs">1136阅/27答</em>
-          </li>
-          <li>
-            <a href="" class="jie-title"> 基于 layui 的极简社区页面模版</a>
-            <i>1天前</i>
-            <em class="layui-hide-xs">1136阅/27答</em>
-          </li>
-          <li>
-            <a href="" class="jie-title"> 基于 layui 的极简社区页面模版</a>
-            <i>1天前</i>
-            <em class="layui-hide-xs">1136阅/27答</em>
-          </li>
-          <!-- <div class="fly-none" style="min-height: 50px; padding:30px 0; height:auto;"><i style="font-size:14px;">没有发表任何求解</i></div> -->
+          <#list posts as post>
+            <li>
+              <#if post.recommend>
+                <span class="fly-jing">精</span>
+              </#if>
+              <a href="/post/${post.id}" class="jie-title">${post.title}</a>
+              <i>${timeAgo(post.created)}</i>
+              <em class="layui-hide-xs">${post.viewCount}阅/${post.commentCount}答</em>
+            </li>
+          </#list>
+          <#if !posts>
+            <div class="fly-none" style="min-height: 50px; padding:30px 0; height:auto;"><i style="font-size:14px;">没有发表任何求解</i></div>
+          </#if>
+
         </ul>
+
       </div>
     </div>
     
@@ -87,7 +61,6 @@
       <div class="fly-panel">
         <h3 class="fly-panel-title"><@shiro.principal property="username" /> 最近的回答</h3>
         <ul class="home-jieda">
-          <#if commentInfo?? && (commentInfo?size > 0)>
             <#list commentInfo as info>
               <li>
                 <p>
@@ -99,7 +72,7 @@
                 </div>
               </li>
             </#list>
-          <#else>
+          <#if !commentInfo>
             <div class="fly-none" style="min-height: 50px; padding:30px 0; height:auto;"><span>没有回答任何问题</span></div>
           </#if>
 

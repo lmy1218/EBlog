@@ -168,14 +168,14 @@ layui.define(['laypage', 'fly', 'element', 'flow'], function(exports){
       upload.render({
         elem: '.upload-img'
         ,url: '/user/upload/'
-        ,size: 50
+        ,size: 50000
         ,before: function(){
           avatarAdd.find('.loading').show();
         }
         ,done: function(res){
           if(res.status == 0){
             $.post('/user/set/', {
-              avatar: res.url
+              avatar: res.data
             }, function(res){
               location.reload();
             });

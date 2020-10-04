@@ -52,6 +52,7 @@ public class MUserServiceImpl extends ServiceImpl<MUserMapper, MUser> implements
         temp.setVipLevel(0);
         temp.setCommentCount(0);
         temp.setPostCount(0);
+        temp.setGender("0");
         // 存入数据库
         this.save(temp);
         return ResultDto.ok();
