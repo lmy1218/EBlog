@@ -8,10 +8,7 @@ package com.lmy.eblog.controller;
  */
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lmy.eblog.service.MCommentService;
-import com.lmy.eblog.service.MPostService;
-import com.lmy.eblog.service.MUserActionService;
-import com.lmy.eblog.service.MUserService;
+import com.lmy.eblog.service.*;
 import com.lmy.eblog.shiro.UserInfo;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +40,9 @@ public class BaseController {
 
     @Autowired
     MUserService mUserServiceImpl;
+
+    @Autowired
+    MUserCollectionService mUserCollectionServiceImpl;
 
     // 获取分页参数
     public Page getPage() {

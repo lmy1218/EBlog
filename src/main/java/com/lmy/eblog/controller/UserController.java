@@ -11,9 +11,11 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.lmy.eblog.dto.ResultDto;
 import com.lmy.eblog.entity.MPost;
 import com.lmy.eblog.entity.MUser;
+import com.lmy.eblog.entity.MUserCollection;
 import com.lmy.eblog.provider.AliyunProvider;
 import com.lmy.eblog.shiro.UserInfo;
 import com.lmy.eblog.vo.UserCommentVo;
@@ -152,6 +154,13 @@ public class UserController extends BaseController {
     }
 
 
+    /**
+     * 修改密码
+     * @param nowpass
+     * @param password
+     * @param repass
+     * @return
+     */
     @PostMapping("repass")
     @ResponseBody
     public ResultDto repss(String nowpass, String password, String repass) {
@@ -170,5 +179,58 @@ public class UserController extends BaseController {
 
         return ResultDto.success("请求成功请重新登录", null).action("/user/set#pass");
     }
+
+
+    /**
+     * 展示用户中心
+     * @return
+     */
+    @GetMapping("index")
+    public String index() {
+        // 查询出用户信息
+        MUser oldUser = mUserServiceImpl.getById(getUserInfo().getId());
+        //查询出发布和收藏的数量
+        int postCount = mPostServiceImpl.count(new QueryWrapper<MPost>().eq("user_id", oldUser.getId()));
+        int colectionCount = mUserCollectionServiceImpl.count(new QueryWrapper<MUserCollection>().eq("user_id", oldUser.getId()));
+
+        req.setAttribute("postCount", postCount);
+        req.setAttribute("coleCount", colectionCount);
+        return "/user/index";
+    }
+
+
+    /**
+     * 展示消息中心
+     * @return
+     */
+    @GetMapping("message")
+    public String message() {
+
+        return "/user/message";
+    }
+
+
+    @GetMapping("public")
+    @ResponseBody
+    public ResultDto userPublic() {
+        // 根据用户ID查询发布的文章
+        IPage page = mPostServiceImpl.page(getPage(), new QueryWrapper<MPost>()
+                .eq("user_id", getUserInfo().getId()).orderByDesc("created"));
+
+        return ResultDto.success(page);
+    }
+
+    @GetMapping("collection")
+    @ResponseBody
+    public ResultDto collection() {
+        // 查询收藏的文章
+        IPage page = mPostServiceImpl.page(getPage(), new QueryWrapper<MPost>()
+                .inSql("id", "select post_id from m_user_collection where user_id = " + getUserInfo().getId()));
+
+        return ResultDto.success(page);
+    }
+
+
+
 
 }

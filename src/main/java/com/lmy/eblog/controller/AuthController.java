@@ -155,6 +155,10 @@ public class AuthController extends BaseController {
         }
     }
 
+    /**
+     * 退出登录
+     * @return
+     */
     @RequestMapping("/user/logout")
     public String logout() {
         SecurityUtils.getSubject().logout();
