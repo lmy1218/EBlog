@@ -9,6 +9,7 @@ package com.lmy.eblog.controller;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.lmy.eblog.dto.ResultDto;
 import com.lmy.eblog.entity.MPost;
@@ -129,7 +130,11 @@ public class UserController extends BaseController {
     }
 
 
-
+    /**
+     * 文件上传
+     * @param file
+     * @return
+     */
     @PostMapping("upload")
     @ResponseBody
     public ResultDto<String> uploadAvatar(@RequestParam(value = "file") MultipartFile file) {
@@ -145,4 +150,25 @@ public class UserController extends BaseController {
 
         return ResultDto.success(url);
     }
+
+
+    @PostMapping("repass")
+    @ResponseBody
+    public ResultDto repss(String nowpass, String password, String repass) {
+        if (password == null || !password.equals(repass)) {
+            return ResultDto.fail("新密码为空或两次密码不一致！");
+        }
+        // 查询出用户信息
+        MUser oldUser = mUserServiceImpl.getById(getUserInfo().getId());
+        if (nowpass == null || !SecureUtil.md5(nowpass).equals(oldUser.getPassword())) {
+            return ResultDto.fail("旧密码不正确！");
+        }
+
+        oldUser.setPassword(SecureUtil.md5(password));
+        mUserServiceImpl.updateById(oldUser);
+        SecurityUtils.getSubject().logout();
+
+        return ResultDto.success("请求成功请重新登录", null).action("/user/set#pass");
+    }
+
 }
