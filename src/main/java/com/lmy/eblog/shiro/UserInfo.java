@@ -27,4 +27,11 @@ public class UserInfo extends BaseEntity implements Serializable {
     private String email;
     // 头像
     private String avatar;
+    // 性别 0 男 1 女
+    private String gender;
+
+    public String getSex() {
+        return "0".equals(gender) ? "男" : "女";
+    }
+
 }

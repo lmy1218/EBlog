@@ -318,7 +318,7 @@ layui.define(['laypage', 'fly', 'element', 'flow'], function(exports){
     
     
     /*
-    fly.json('/message/find/', {}, function(res){
+    fly.json('/user//message/find/', {}, function(res){
       var html = laytpl(tpl).render(res);
       dom.minemsg.html(html);
       if(res.rows.length > 0){
@@ -330,7 +330,7 @@ layui.define(['laypage', 'fly', 'element', 'flow'], function(exports){
     //阅读后删除
     dom.minemsg.on('click', '.mine-msg li .fly-delete', function(){
       var othis = $(this).parents('li'), id = othis.data('id');
-      fly.json('/message/remove/', {
+      fly.json('/user/message/remove/', {
         id: id
       }, function(res){
         if(res.status === 0){
@@ -344,7 +344,7 @@ layui.define(['laypage', 'fly', 'element', 'flow'], function(exports){
     $('#LAY_delallmsg').on('click', function(){
       var othis = $(this);
       layer.confirm('确定清空吗？', function(index){
-        fly.json('/message/remove/', {
+        fly.json('/user//message/remove/', {
           all: true
         }, function(res){
           if(res.status === 0){

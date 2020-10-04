@@ -8,6 +8,7 @@ package com.lmy.eblog.shiro;
  */
 
 import com.lmy.eblog.service.MUserService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -38,6 +39,8 @@ public class AccountRealm extends AuthorizingRealm {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         // 验证逻辑
         UserInfo userInfo = mUserServiceImpl.login(token.getUsername(), String.valueOf(token.getPassword()));
+        // 将用户信息存入session
+        SecurityUtils.getSubject().getSession().setAttribute("userInfo", userInfo);
 
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(userInfo, token.getCredentials(), getName());
         return authenticationInfo;

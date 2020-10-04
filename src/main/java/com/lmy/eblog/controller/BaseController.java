@@ -44,6 +44,10 @@ public class BaseController {
     @Autowired
     MUserCollectionService mUserCollectionServiceImpl;
 
+    @Autowired
+    MUserMessageService mUserMessageServiceImpl;
+
+
     // 获取分页参数
     public Page getPage() {
         int pn = ServletRequestUtils.getIntParameter(req, "pn", 1);

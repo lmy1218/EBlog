@@ -8,6 +8,7 @@ package com.lmy.eblog.controller;
  */
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -16,9 +17,11 @@ import com.lmy.eblog.dto.ResultDto;
 import com.lmy.eblog.entity.MPost;
 import com.lmy.eblog.entity.MUser;
 import com.lmy.eblog.entity.MUserCollection;
+import com.lmy.eblog.entity.MUserMessage;
 import com.lmy.eblog.provider.AliyunProvider;
 import com.lmy.eblog.shiro.UserInfo;
 import com.lmy.eblog.vo.UserCommentVo;
+import com.lmy.eblog.vo.UserMessageVo;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Lmy
@@ -103,7 +107,9 @@ public class UserController extends BaseController {
             // 更新shiro中的用户信息
             UserInfo userInfo = getUserInfo();
             userInfo.setAvatar(user.getAvatar());
-            SecurityUtils.getSubject().getSession().setAttribute("user", userInfo);
+            // 将用户信息存入session
+            SecurityUtils.getSubject().getSession().setAttribute("userInfo", userInfo);
+            ResultDto.ok().action("/user/set#avatar");
         }
         // 查询出用户信息
         MUser oldUser = mUserServiceImpl.getById(getUserInfo().getId());
@@ -127,6 +133,8 @@ public class UserController extends BaseController {
             userInfo.setAvatar(user.getAvatar());
         }
         userInfo.setUsername(oldUser.getUsername());
+        // 将用户信息存入session
+        SecurityUtils.getSubject().getSession().setAttribute("userInfo", userInfo);
 
         return ResultDto.ok().action("/user/set#info");
     }
@@ -205,11 +213,19 @@ public class UserController extends BaseController {
      */
     @GetMapping("message")
     public String message() {
-
+        // 查询出当前用户的消息
+        IPage<UserMessageVo> page = mUserMessageServiceImpl.paging(getPage(), new QueryWrapper<MUserMessage>()
+                .eq("to_user_id", getUserInfo().getId())
+                .orderByAsc("created")
+        );
+        req.setAttribute("messages", page);
         return "/user/message";
     }
 
-
+    /**
+     * 获取我发布的文章
+     * @return
+     */
     @GetMapping("public")
     @ResponseBody
     public ResultDto userPublic() {
@@ -220,6 +236,10 @@ public class UserController extends BaseController {
         return ResultDto.success(page);
     }
 
+    /**
+     * 获取我收藏的文章
+     * @return
+     */
     @GetMapping("collection")
     @ResponseBody
     public ResultDto collection() {
@@ -231,6 +251,44 @@ public class UserController extends BaseController {
     }
 
 
+    /**
+     *  清楚消息
+     * @param id 消息id
+     * @param all 是否清除所有消息
+     * @return
+     */
+    @PostMapping("message/remove")
+    @ResponseBody
+    public ResultDto msgResmove(Long id, @RequestParam(defaultValue = "false") Boolean all) {
+        boolean remove = mUserMessageServiceImpl.remove(new QueryWrapper<MUserMessage>()
+                .eq("to_user_id", getUserInfo().getId())
+                .eq(!all, "id", id)
+        );
 
+        return remove ?  ResultDto.ok() : ResultDto.fail("删除失败");
+    }
+
+
+    @PostMapping("message/nums")
+    @ResponseBody
+    public Map msgNums() {
+        // 查询当前用户未读的消息
+        int count = mUserMessageServiceImpl.count(new QueryWrapper<MUserMessage>()
+                .eq("to_user_id", getUserInfo().getId())
+                .eq("status", 0)
+        );
+        return MapUtil.builder("status", 0).put("count", count).build();
+    }
+
+    @PostMapping("message/read")
+    @ResponseBody
+    public ResultDto messRead() {
+        MUserMessage message = new MUserMessage();
+        message.setStatus(1);
+        mUserMessageServiceImpl.update(message, new QueryWrapper<MUserMessage>()
+                .eq("status", 0)
+        );
+        return ResultDto.ok();
+    }
 
 }

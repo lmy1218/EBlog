@@ -30,9 +30,9 @@
     <script>
         // layui.cache.page = '';
         layui.cache.user = {
-            username: '游客'
-            ,uid: -1
-            ,avatar: '/res/images/avatar/00.jpg'
+            username: '${userInfo.username ! "游客"}'
+            ,uid: ${userInfo.id ! -1}
+            ,avatar: '${userInfo ! "/res/images/avatar/00.jpg"}'
             ,experience: 83
             ,sex: '男'
         };

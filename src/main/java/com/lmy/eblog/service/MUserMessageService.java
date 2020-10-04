@@ -1,7 +1,11 @@
 package com.lmy.eblog.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lmy.eblog.entity.MUserMessage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lmy.eblog.vo.UserMessageVo;
 
 /**
  * <p>
@@ -13,4 +17,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface MUserMessageService extends IService<MUserMessage> {
 
+    IPage<UserMessageVo> paging(Page page, QueryWrapper<MUserMessage> wrapper);
 }

@@ -40,12 +40,20 @@ public class MUserMessage extends BaseEntity {
      */
     private Long commentId;
 
+    /**
+     * 评论内容
+     */
     private String content;
 
     /**
-     * 消息类型
+     * 消息类型: 0 系统消息 1 评论 2 回答
      */
     private Integer type;
+
+    /**
+     * 是否已读
+     */
+    private Integer status;
 
 
 }

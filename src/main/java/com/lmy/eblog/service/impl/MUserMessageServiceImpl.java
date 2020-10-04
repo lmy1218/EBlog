@@ -1,9 +1,13 @@
 package com.lmy.eblog.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lmy.eblog.entity.MUserMessage;
 import com.lmy.eblog.mapper.MUserMessageMapper;
 import com.lmy.eblog.service.MUserMessageService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.lmy.eblog.vo.UserMessageVo;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,10 +15,14 @@ import org.springframework.stereotype.Service;
  *  服务实现类
  * </p>
  *
- * @author 公众号：java思维导图
+ * @author lmy
  * @since 2020-09-30
  */
 @Service
 public class MUserMessageServiceImpl extends ServiceImpl<MUserMessageMapper, MUserMessage> implements MUserMessageService {
 
+    @Override
+    public IPage<UserMessageVo> paging(Page page, QueryWrapper<MUserMessage> wrapper) {
+        return baseMapper.selectMessgeVo(page, wrapper);
+    }
 }
