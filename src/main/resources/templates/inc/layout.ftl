@@ -13,6 +13,10 @@
 
         <script src="/res/layui/layui.js"></script>
         <script src="/res/js/jquery.min.js"></script>
+        <script src="/res/js/sockjs.js"></script>
+        <script src="/res/js/stomp.js"></script>
+<#--        <script src="/res/js/im.js"></script>-->
+<#--        <script src="/res/js/chat.js"></script>-->
     </head>
     <body>
 
@@ -43,7 +47,39 @@
             fly: 'index'
         }).use('fly');
     </script>
+    <script>
+        function showTips(count) {
+            var msg = $('<a class="fly-nav-msg" href="javascript:;">'+ count +'</a>');
+            var elemUser = $('.fly-nav-user');
+            elemUser.append(msg);
+            msg.on('click', function(){
+                location.href = "/user/message";
+            });
+            layer.tips('你有 '+ count +' 条未读消息', msg, {
+                tips: 3
+                ,tipsMore: true
+                ,fixed: true
+            });
+            msg.on('mouseenter', function(){
+                layer.closeAll('tips');
+            })
+        }
+        $(function () {
+            var elemUser = $('.fly-nav-user');
+            if(layui.cache.user.uid !== -1 && elemUser[0]){
+                var socket = new SockJS("/websocket")
+                stompClient = Stomp.over(socket);
+                stompClient.connect({}, function (frame) {
+                    stompClient.subscribe("/user/" + ${userInfo.id} + "/messCount", function (res) {
+                        console.log(res);
+                        // 弹窗
+                        showTips(res.body);
+                    })
+                });
 
+            }
+        });
+    </script>
     </body>
 </html>
 </#macro>

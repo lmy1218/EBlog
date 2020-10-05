@@ -287,11 +287,7 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
             var msg = $('<a class="fly-nav-msg" href="javascript:;">'+ res.count +'</a>');
             elemUser.append(msg);
             msg.on('click', function(){
-              fly.json('/user/message/read', {}, function(res){
-                if(res.status === 0){
-                  location.href = '/user/message/ ';
-                }
-              });
+                  location.href = '/user/message';
             });
             layer.tips('你有 '+ res.count +' 条未读消息', msg, {
               tips: 3
@@ -551,10 +547,11 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
     var action = $(data.form).attr('action'), button = $(data.elem);
     fly.json(action, data.field, function(res){
       var end = function(){
+
         if(res.action){
           location.href = res.action;
         }
-        if(button.attr('alert')){
+        if(button.attr('reload')){
           location.reload();
         }
         // else {

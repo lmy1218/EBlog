@@ -11,6 +11,7 @@ import com.lmy.eblog.service.MUserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +30,31 @@ public class AccountRealm extends AuthorizingRealm {
     @Autowired
     private MUserService mUserServiceImpl;
 
+    /**
+     * 权限操作
+     * @param principalCollection
+     * @return
+     */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        // 获取当前用户
+        UserInfo userInfo = (UserInfo) principalCollection.getPrimaryPrincipal();
+        // 验证是否是管理员
+        if (userInfo.getId() == 11) {
+            SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+            info.addRole("admin");
+            return info;
+        }
         return null;
     }
 
+
+    /**
+     * 认证操作
+     * @param authenticationToken
+     * @return
+     * @throws AuthenticationException
+     */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;

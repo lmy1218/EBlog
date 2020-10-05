@@ -10,6 +10,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lmy.eblog.vo.UserMessageVo;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -24,5 +26,14 @@ public class MUserMessageServiceImpl extends ServiceImpl<MUserMessageMapper, MUs
     @Override
     public IPage<UserMessageVo> paging(Page page, QueryWrapper<MUserMessage> wrapper) {
         return baseMapper.selectMessgeVo(page, wrapper);
+    }
+
+    @Override
+    public void updateToReaded(List<Long> ids) {
+        if(ids.isEmpty()) return;
+
+        baseMapper.updateToReaded(new QueryWrapper<MUserMessage>()
+                .in("id", ids)
+        );
     }
 }

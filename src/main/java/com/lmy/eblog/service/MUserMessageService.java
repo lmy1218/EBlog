@@ -7,6 +7,8 @@ import com.lmy.eblog.entity.MUserMessage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lmy.eblog.vo.UserMessageVo;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -18,4 +20,6 @@ import com.lmy.eblog.vo.UserMessageVo;
 public interface MUserMessageService extends IService<MUserMessage> {
 
     IPage<UserMessageVo> paging(Page page, QueryWrapper<MUserMessage> wrapper);
+
+    void updateToReaded(List<Long> ids);
 }

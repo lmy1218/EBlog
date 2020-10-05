@@ -9,6 +9,7 @@ package com.lmy.eblog.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lmy.eblog.service.*;
+import com.lmy.eblog.service.impl.MCategoryServiceImpl;
 import com.lmy.eblog.shiro.UserInfo;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,11 +48,17 @@ public class BaseController {
     @Autowired
     MUserMessageService mUserMessageServiceImpl;
 
+    @Autowired
+    MCategoryService mCategoryServiceImpl;
+
+
+    @Autowired
+    WsService wsServiceImpl;
 
     // 获取分页参数
     public Page getPage() {
         int pn = ServletRequestUtils.getIntParameter(req, "pn", 1);
-        int size = ServletRequestUtils.getIntParameter(req, "size", 2);
+        int size = ServletRequestUtils.getIntParameter(req, "size", 6);
         // 分页查询博客
         return new Page(pn, size);
     }

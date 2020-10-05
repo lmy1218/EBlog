@@ -21,6 +21,8 @@ import java.io.Serializable;
 @Data
 public class UserInfo extends BaseEntity implements Serializable {
 
+    // id
+    private Long id;
     // 用户名
     private String username;
     // 邮箱

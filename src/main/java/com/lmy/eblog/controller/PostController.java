@@ -11,12 +11,15 @@ import cn.hutool.core.map.MapUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.lmy.eblog.dto.ResultDto;
-import com.lmy.eblog.entity.MPost;
-import com.lmy.eblog.entity.MUserCollection;
+import com.lmy.eblog.entity.*;
+import com.lmy.eblog.service.MCategoryService;
 import com.lmy.eblog.service.MUserCollectionService;
+import com.lmy.eblog.utils.ValidationUtil;
 import com.lmy.eblog.vo.CommentVo;
 import com.lmy.eblog.vo.PostVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -151,6 +154,206 @@ public class PostController extends BaseController {
         if (!remove) {
             ResultDto.fail("收藏不存在！");
         }
+        return ResultDto.ok();
+    }
+
+
+    /**
+     * 展示发布或编辑页面
+     * @return
+     */
+    @GetMapping("/post/edit")
+    public String showEdit() {
+        // 判断是发布还是编辑
+        String id = req.getParameter("id");
+        if (!StringUtils.isBlank(id)) {
+            // 编辑
+            // 验证
+            MPost post = mPostServiceImpl.getById(id);
+            Assert.isTrue(post != null, "该文章已不存在！");
+            Assert.isTrue(post.getUserId().longValue() == getUserInfo().getId().longValue(), "没有权限！");
+            req.setAttribute("post", post);
+        }
+        req.setAttribute("categories", mCategoryServiceImpl.list());
+        return "/post/edit";
+    }
+
+
+    /**
+     * 文章新增或编辑提交
+     * @param post
+     * @return
+     */
+    @PostMapping("/post/submit")
+    @ResponseBody
+    public ResultDto postAdd(MPost post) {
+        // 校验参数
+        ValidationUtil.ValidResult validResult = ValidationUtil.validateBean(post);
+        if (validResult.hasErrors()) {
+            return ResultDto.fail(validResult.getErrors());
+        }
+        Long userId = getUserInfo().getId();
+        if(post.getId() == null) {
+            // 新增
+            post.setUserId(userId);
+
+            post.setModified(new Date());
+            post.setCreated(new Date());
+            post.setCommentCount(0);
+            post.setEditMode(null);
+            post.setLevel(0);
+            post.setRecommend(false);
+            post.setViewCount(0);
+            post.setVoteDown(0);
+            post.setVoteUp(0);
+            mPostServiceImpl.save(post);
+
+        } else {
+            // 编辑
+            MPost tempPost = mPostServiceImpl.getById(post.getId());
+            Assert.isTrue(tempPost.getUserId().longValue() == userId.longValue(), "无权限编辑此文章！");
+
+            tempPost.setTitle(post.getTitle());
+            tempPost.setContent(post.getContent());
+            tempPost.setCategoryId(post.getCategoryId());
+            mPostServiceImpl.updateById(tempPost);
+        }
+
+        return ResultDto.ok().action("/post/" + post.getId());
+    }
+
+
+    /**
+     * 文章删除
+     * @param id
+     * @return
+     */
+    @PostMapping("/post/delete")
+    @ResponseBody
+    @Transactional(rollbackFor = Exception.class)
+    public ResultDto postDelete(Long id) {
+        // 验证
+        MPost post = mPostServiceImpl.getById(id);
+        Assert.isNull(post, "该文章不存在");
+        Assert.isTrue(post.getUserId().longValue() == getUserInfo().getId().longValue(), "小伙子，这不是你发布的文章哟！");
+        // 删除该文章、以及相关收藏和消息
+        mPostServiceImpl.removeById(id);
+        mUserMessageServiceImpl.removeByMap(MapUtil.of("post_id", id));
+        mUserCollectionServiceImpl.removeByMap(MapUtil.of("post_id", id));
+        mUserActionServiceImpl.removeByMap(MapUtil.of("post_id", id));
+
+        return ResultDto.success("删除成功", null).action("/");
+    }
+
+
+    /**
+     * 回复功能
+     * @param postId 被评论的文章ID
+     * @param content 评论的内容
+     * @return
+     */
+    @PostMapping("/post/reply")
+    @ResponseBody
+    @Transactional(rollbackFor = Exception.class)
+    public ResultDto postReply(Long postId, String content) {
+        // 验证参数
+        Assert.notNull(postId, "找不到对应的文章！");
+        Assert.hasLength(content, "回复内容不能为空！");
+        // 保存评论
+        MPost post = mPostServiceImpl.getById(postId);
+        Assert.isTrue(post != null, "该文章已被删除");
+
+        MComment comment = new MComment();
+        comment.setPostId(postId);
+        comment.setContent(content);
+        comment.setUserId(getUserInfo().getId());
+        comment.setCreated(new Date());
+        comment.setModified(new Date());
+        comment.setLevel(0);
+        comment.setVoteDown(0);
+        comment.setVoteUp(0);
+        mCommentServiceImpl.save(comment);
+
+
+        // 文章评论数量加一
+        post.setCommentCount(post.getCommentCount() + 1);
+        mPostServiceImpl.updateById(post);
+
+        // 本周热议数据更新
+        mPostServiceImpl.addCommentCountforWeekRank(postId, true);
+
+        // 通知作者有人评论了你的文章
+        if (comment.getUserId() != post.getId()) {
+            MUserMessage message = new MUserMessage();
+            message.setPostId(postId);
+            message.setCommentId(comment.getId());
+            message.setFromUserId(getUserInfo().getId());
+            message.setToUserId(post.getUserId());
+            message.setType(1);
+            message.setContent(content);
+            message.setCreated(new Date());
+            message.setStatus(0);
+            mUserMessageServiceImpl.save(message);
+
+            // 即时通知作者（websocket）
+            wsServiceImpl.sendMessCountToUser(message.getToUserId());
+        }
+
+        // 增加最近回复
+        MUserAction action = new MUserAction();
+        action.setCommentId(comment.getId() + "");
+        action.setPoint(0);
+        action.setPostId(postId + "");
+        action.setUserId(getUserInfo().getId() + "");
+        action.setCreated(new Date());
+
+        // 通知被@的人，有人回复了你的评论
+        if(content.startsWith("@")) {
+            String username = content.substring(1, content.indexOf(" "));
+            System.out.println(username);
+
+            MUser user = mUserServiceImpl.getOne(new QueryWrapper<MUser>().eq("username", username));
+            if (user != null) {
+                MUserMessage message = new MUserMessage();
+                message.setPostId(postId);
+                message.setCommentId(comment.getId());
+                message.setFromUserId(getUserInfo().getId());
+                message.setToUserId(user.getId());
+                message.setType(2);
+                message.setContent(content);
+                message.setCreated(new Date());
+                message.setStatus(0);
+                mUserMessageServiceImpl.save(message);
+
+
+                action.setAction("回复");
+                // 即时通知被@的用户
+            }
+
+        } else {
+            action.setAction("评论");
+        }
+        mUserActionServiceImpl.save(action);
+
+
+        return ResultDto.ok().action("/post/" + postId);
+    }
+
+
+    /**
+     * 删除评论
+     * @param id
+     * @return
+     */
+    @PostMapping("/comment/delete")
+    @ResponseBody
+    public ResultDto commentDelete(Long id) {
+        // 查询评论
+        MComment comment = mCommentServiceImpl.getById(id);
+        Assert.notNull(comment, "评论不存在！");
+        Assert.isTrue(comment.getUserId().longValue() == getUserInfo().getId().longValue(), "这不是你的评论！");
+        // 删除
+        mCommentServiceImpl.removeById(id);
         return ResultDto.ok();
     }
 

@@ -32,7 +32,9 @@
       <div class="layui-tab-content" style="padding: 20px 0;">
         <div class="layui-tab-item layui-show">
           <ul class="mine-view jie-row" id="fabu" >
+
             <script id="tpl-fabu" type="text/html">
+
               <li>
                 <a class="jie-title" href="/post/{{d.id}}" target="_blank">{{ d.title }}</a>
                 <i>{{layui.util.toDateString(d.created, 'yyyy-MM-dd HH:mm:ss')}}</i>
@@ -75,6 +77,7 @@
         var lis = [];
 
         $.get('/user/public?pn='+page, function(res){
+          console.log(res.data.records)
           layui.each(res.data.records, function(index, item){
 
             var tpl = $("#tpl-fabu").html();

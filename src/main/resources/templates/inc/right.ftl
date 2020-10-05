@@ -1,31 +1,24 @@
 <#--右边-->
 <div class="layui-col-md4">
 
-    <div class="fly-panel">
-        <h3 class="fly-panel-title">温馨通道</h3>
-        <ul class="fly-panel-main fly-list-static">
-            <li>
-                <a href="http://fly.layui.com/jie/4281/" target="_blank">layui 的 GitHub 及 Gitee (码云) 仓库，欢迎Star</a>
-            </li>
-            <li>
-                <a href="http://fly.layui.com/jie/5366/" target="_blank">
-                    layui 常见问题的处理和实用干货集锦
-                </a>
-            </li>
-            <li>
-                <a href="http://fly.layui.com/jie/4281/" target="_blank">layui 的 GitHub 及 Gitee (码云) 仓库，欢迎Star</a>
-            </li>
-            <li>
-                <a href="http://fly.layui.com/jie/5366/" target="_blank">
-                    layui 常见问题的处理和实用干货集锦
-                </a>
-            </li>
-            <li>
-                <a href="http://fly.layui.com/jie/4281/" target="_blank">layui 的 GitHub 及 Gitee (码云) 仓库，欢迎Star</a>
-            </li>
-        </ul>
-    </div>
+    <#--本周热议-->
+    <dl class="fly-panel fly-list-one">
+        <dt class="fly-panel-title">本周热议</dt>
+        <@hots>
+            <#list results as post>
+                <dd>
+                    <a href="/post/${post.id}">${post.title}</a>
+                    <span><i class="iconfont icon-pinglun1"></i> ${post.commentCount}</span>
+                </dd>
+            </#list>
+        </@hots>
 
+
+        <!-- 无数据时 -->
+        <!--
+        <div class="fly-none">没有相关数据</div>
+        -->
+    </dl>
 
     <div class="fly-panel fly-signin">
         <div class="fly-panel-title">
@@ -114,24 +107,30 @@
             </dd>
         </dl>
     </div>
-    <#--本周热议-->
-    <dl class="fly-panel fly-list-one">
-        <dt class="fly-panel-title">本周热议</dt>
-        <@hots>
-            <#list results as post>
-                <dd>
-                    <a href="/post/${post.id}">${post.title}</a>
-                    <span><i class="iconfont icon-pinglun1"></i> ${post.commentCount}</span>
-                </dd>
-            </#list>
-        </@hots>
-
-
-        <!-- 无数据时 -->
-        <!--
-        <div class="fly-none">没有相关数据</div>
-        -->
-    </dl>
+    <div class="fly-panel">
+        <h3 class="fly-panel-title">温馨通道</h3>
+        <ul class="fly-panel-main fly-list-static">
+            <li>
+                <a href="http://fly.layui.com/jie/4281/" target="_blank">layui 的 GitHub 及 Gitee (码云) 仓库，欢迎Star</a>
+            </li>
+            <li>
+                <a href="http://fly.layui.com/jie/5366/" target="_blank">
+                    layui 常见问题的处理和实用干货集锦
+                </a>
+            </li>
+            <li>
+                <a href="http://fly.layui.com/jie/4281/" target="_blank">layui 的 GitHub 及 Gitee (码云) 仓库，欢迎Star</a>
+            </li>
+            <li>
+                <a href="http://fly.layui.com/jie/5366/" target="_blank">
+                    layui 常见问题的处理和实用干货集锦
+                </a>
+            </li>
+            <li>
+                <a href="http://fly.layui.com/jie/4281/" target="_blank">layui 的 GitHub 及 Gitee (码云) 仓库，欢迎Star</a>
+            </li>
+        </ul>
+    </div>
 
     <div class="fly-panel">
         <div class="fly-panel-title">

@@ -9,6 +9,7 @@ import com.lmy.eblog.service.MUserActionService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lmy.eblog.vo.UserCommentVo;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,7 @@ public class MUserActionServiceImpl extends ServiceImpl<MUserActionMapper, MUser
         List<UserCommentVo> list = new ArrayList<>();
         for (MUserAction action : mUserActions) {
             UserCommentVo commentVo = baseMapper.selectCommentInfo(Long.parseLong(action.getPostId()), Long.parseLong(action.getCommentId()));
+            Assert.isTrue(commentVo != null, "未查询到回复");
             commentVo.setAction(action.getAction());
             list.add(commentVo);
         }

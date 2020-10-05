@@ -7,8 +7,11 @@ package com.lmy.eblog.entity;
  * @version V1.0
  */
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -18,8 +21,8 @@ import java.util.Date;
  * @date 2020/9/30 10:45
  **/
 @Data
-public class BaseEntity {
-
+public class BaseEntity implements Serializable {
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     private Date created;
     private Date modified;

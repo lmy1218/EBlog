@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -216,8 +217,19 @@ public class UserController extends BaseController {
         // 查询出当前用户的消息
         IPage<UserMessageVo> page = mUserMessageServiceImpl.paging(getPage(), new QueryWrapper<MUserMessage>()
                 .eq("to_user_id", getUserInfo().getId())
-                .orderByAsc("created")
+                .orderByDesc("created")
         );
+
+        // 把消息改成已读状态
+        List<Long> ids = new ArrayList<>();
+        for(UserMessageVo messageVo : page.getRecords()) {
+            if(messageVo.getStatus() == 0) {
+                ids.add(messageVo.getId());
+            }
+        }
+        // 批量修改成已读
+        mUserMessageServiceImpl.updateToReaded(ids);
+
         req.setAttribute("messages", page);
         return "/user/message";
     }
@@ -280,15 +292,5 @@ public class UserController extends BaseController {
         return MapUtil.builder("status", 0).put("count", count).build();
     }
 
-    @PostMapping("message/read")
-    @ResponseBody
-    public ResultDto messRead() {
-        MUserMessage message = new MUserMessage();
-        message.setStatus(1);
-        mUserMessageServiceImpl.update(message, new QueryWrapper<MUserMessage>()
-                .eq("status", 0)
-        );
-        return ResultDto.ok();
-    }
 
 }
