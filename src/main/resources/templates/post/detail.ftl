@@ -132,4 +132,19 @@
       <#include "/inc/right.ftl" />
     </div>
   </div>
+
+  <script>
+    layui.cache.page = 'jie';
+
+    $(function () {
+      layui.use(['fly', 'face'], function() {
+        var fly = layui.fly;
+        $('.detail-body').each(function(){
+          var othis = $(this), html = othis.html();
+          othis.html(fly.content(html));
+        });
+      });
+    });
+
+  </script>
 </@layout>
