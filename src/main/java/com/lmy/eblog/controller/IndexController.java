@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lmy.eblog.vo.PostVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -38,6 +39,22 @@ public class IndexController extends BaseController {
         req.setAttribute("pageData", result);
         req.setAttribute("currentCategoryId", 0);
         return "index";
+    }
+
+
+    /**
+     * 搜索功能
+     * @param q 搜索关键字
+     * @return
+     */
+    @GetMapping("/post/search")
+    public String search(String q) {
+
+        IPage pageData = searchServiceImpl.search(getPage(), q);
+
+        req.setAttribute("q", q);
+        req.setAttribute("pageData", pageData);
+        return "search";
     }
 
 

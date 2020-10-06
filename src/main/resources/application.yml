@@ -20,6 +20,18 @@ spring:
   redis:
     host: 192.168.75.139
     port: 6379
+  data:
+    elasticsearch:
+      cluster-name: elasticsearch
+      cluster-nodes: 192.168.75.140:9300
+      repositories:
+        enabled: true
+  rabbitmq:
+    host: 192.168.75.139
+    username: leyou
+    password: leyou
+    virtual-host: /leyou
+
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**Mapper.xml
 

@@ -8,13 +8,24 @@ package com.lmy.eblog.controller;
  */
 
 import cn.hutool.core.map.MapUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lmy.eblog.dto.ResultDto;
 import com.lmy.eblog.entity.MPost;
+import com.lmy.eblog.search.model.PostDocument;
+import com.lmy.eblog.search.repository.PostRepository;
+import com.lmy.eblog.vo.PostVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Lmy
@@ -25,6 +36,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("admin")
 public class AdminController extends BaseController {
+
+
+    @Autowired
+    PostRepository postRepository;
 
 
     /**
@@ -61,5 +76,35 @@ public class AdminController extends BaseController {
     }
 
 
+    /**
+     * 同步es数据
+     * @return
+     */
+    @PostMapping("init")
+    @ResponseBody
+    public ResultDto initEsData() {
+        // 查询spu信息
+        int page = 1;
+        int rows = 100;
+        int size = 0;
+        int tatol = 0;
+        do{
+            Page pg = new Page(page, rows);
+            IPage<PostVo> posts = mPostServiceImpl.paging(pg, null, null, null, null, "created");
+            List<PostVo> postList = posts.getRecords();
+            if (CollectionUtils.isEmpty(postList)) {
+                break;
+            }
+            //构建成goods
+            List<PostDocument> documents = searchServiceImpl.buildPost(postList);
+            //导入数据库索引
+            postRepository.saveAll(documents);
+            page++;
+            size = postList.size();
+            tatol += size;
+        } while (size == 100);
+
+        return ResultDto.success("Es数据同步成功，共 "+ tatol + " 条记录！", null);
+    }
 
 }

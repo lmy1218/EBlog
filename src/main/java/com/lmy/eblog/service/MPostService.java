@@ -1,5 +1,6 @@
 package com.lmy.eblog.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lmy.eblog.entity.MPost;
@@ -25,4 +26,6 @@ public interface MPostService extends IService<MPost> {
     void addCommentCountforWeekRank(Long postId, boolean isAdd);
 
     void putViewCount(PostVo post);
+
+    PostVo selectOnePost(QueryWrapper<MPost> wrapper);
 }

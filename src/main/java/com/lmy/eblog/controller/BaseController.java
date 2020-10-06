@@ -8,10 +8,12 @@ package com.lmy.eblog.controller;
  */
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lmy.eblog.search.service.SearchService;
 import com.lmy.eblog.service.*;
 import com.lmy.eblog.service.impl.MCategoryServiceImpl;
 import com.lmy.eblog.shiro.UserInfo;
 import org.apache.shiro.SecurityUtils;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -51,9 +53,15 @@ public class BaseController {
     @Autowired
     MCategoryService mCategoryServiceImpl;
 
-
     @Autowired
     WsService wsServiceImpl;
+
+    @Autowired
+    SearchService searchServiceImpl;
+
+    @Autowired
+    AmqpTemplate amqpTemplate;
+
 
     // 获取分页参数
     public Page getPage() {

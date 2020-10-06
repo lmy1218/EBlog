@@ -10,8 +10,10 @@ package com.lmy.eblog.controller;
 import cn.hutool.core.map.MapUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.lmy.eblog.config.RabbitConfig;
 import com.lmy.eblog.dto.ResultDto;
 import com.lmy.eblog.entity.*;
+import com.lmy.eblog.mq.PostMqIndexMessage;
 import com.lmy.eblog.service.MCategoryService;
 import com.lmy.eblog.service.MUserCollectionService;
 import com.lmy.eblog.utils.ValidationUtil;
@@ -218,7 +220,9 @@ public class PostController extends BaseController {
             tempPost.setCategoryId(post.getCategoryId());
             mPostServiceImpl.updateById(tempPost);
         }
-
+        // 通知mq告知es更新
+        amqpTemplate.convertAndSend(RabbitConfig.es_exchage, RabbitConfig.es_bind_key,
+                new PostMqIndexMessage(post.getId(), PostMqIndexMessage.CREATE_OR_UPDATE));
         return ResultDto.ok().action("/post/" + post.getId());
     }
 
@@ -241,6 +245,10 @@ public class PostController extends BaseController {
         mUserMessageServiceImpl.removeByMap(MapUtil.of("post_id", id));
         mUserCollectionServiceImpl.removeByMap(MapUtil.of("post_id", id));
         mUserActionServiceImpl.removeByMap(MapUtil.of("post_id", id));
+
+        // 通知mq告知es更新
+        amqpTemplate.convertAndSend(RabbitConfig.es_exchage, RabbitConfig.es_bind_key,
+                new PostMqIndexMessage(id, PostMqIndexMessage.REMOVE));
 
         return ResultDto.success("删除成功", null).action("/");
     }

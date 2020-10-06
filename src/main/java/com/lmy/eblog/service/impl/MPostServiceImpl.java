@@ -177,5 +177,10 @@ public class MPostServiceImpl extends ServiceImpl<MPostMapper, MPost> implements
         redisUtil.hset(key, "post:viewCount", post.getViewCount());
     }
 
+    @Override
+    public PostVo selectOnePost(QueryWrapper<MPost> wrapper) {
+        return baseMapper.selectPost(wrapper);
+    }
+
 
 }
