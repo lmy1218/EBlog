@@ -17,7 +17,7 @@
                         <a href="#signin" class="layui-hide-sm layui-show-xs-block fly-right" id="LAY_goSignin" style="color: #FF5722;">去签到</a>
                     </div>
                     <ul class="fly-list">
-                        <@posts size=3 level=1>
+                        <@posts size=6 level=1>
                             <#list results.records as post>
                                 <@plisting post></@plisting>
                             </#list>

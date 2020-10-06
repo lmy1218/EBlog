@@ -156,11 +156,11 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
               //执行上传实例
               upload.render({
                 elem: '#uploadImg'
-                ,url: '/api/upload/'
+                ,url: '/user/upload'
                 ,size: 200
                 ,done: function(res){
                   if(res.status == 0){
-                    image.val(res.url);
+                    image.val(res.data);
                   } else {
                     layer.msg(res.msg, {icon: 5});
                   }

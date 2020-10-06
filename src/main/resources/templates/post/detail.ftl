@@ -26,7 +26,7 @@
 
             <div class="fly-admin-box" data-id="${post.id}">
 
-              <#if post.userId == userInfo.id>
+              <#if post.userId == userInfo.id && userInfo.username != "admin">
               <#--发布者删除-->
                 <span class="layui-btn layui-btn-xs jie-admin" type="del">删除</span>
               </#if>
