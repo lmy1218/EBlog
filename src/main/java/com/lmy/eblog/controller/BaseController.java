@@ -62,6 +62,9 @@ public class BaseController {
     @Autowired
     AmqpTemplate amqpTemplate;
 
+    @Autowired
+    ChatService chatServiceImpl;
+
 
     // 获取分页参数
     public Page getPage() {

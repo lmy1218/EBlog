@@ -15,8 +15,8 @@
         <script src="/res/js/jquery.min.js"></script>
         <script src="/res/js/sockjs.js"></script>
         <script src="/res/js/stomp.js"></script>
-<#--        <script src="/res/js/im.js"></script>-->
-<#--        <script src="/res/js/chat.js"></script>-->
+        <script src="/res/js/im.js"></script>
+        <script src="/res/js/chat.js"></script>
     </head>
     <body>
 
@@ -29,7 +29,6 @@
 
     <#--尾部-->
     <#include "/inc/footer.ftl" />
-
 
     <script>
         // layui.cache.page = '';
@@ -80,6 +79,7 @@
             }
         });
     </script>
+
     </body>
 </html>
 </#macro>

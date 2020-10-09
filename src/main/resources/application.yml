@@ -40,3 +40,7 @@ yun:
   accessKeyId: LTAI4GDZpCFa7NtQY5RC7Qw3
   accessKeySecret: bauRCDzYWcgvDvs0icLQLEhcHxV9TW
   bucketName: ferryblog
+
+im:
+  server:
+    port: 9326
