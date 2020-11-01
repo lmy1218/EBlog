@@ -72,9 +72,7 @@ public class PostController extends BaseController {
         IPage<CommentVo> comments = mCommentServiceImpl.selectPageComments(getPage(), post.getId(), null, "created");
         // 断言
         Assert.notNull(comments, "无评论信息");
-
         mPostServiceImpl.putViewCount(post);
-
         // 将结果集放入response作用域
         req.setAttribute("comments", comments);
         req.setAttribute("post", post);
@@ -270,7 +268,7 @@ public class PostController extends BaseController {
         // 保存评论
         MPost post = mPostServiceImpl.getById(postId);
         Assert.isTrue(post != null, "该文章已被删除");
-
+        // 组装评论实体
         MComment comment = new MComment();
         comment.setPostId(postId);
         comment.setContent(content);
@@ -281,15 +279,12 @@ public class PostController extends BaseController {
         comment.setVoteDown(0);
         comment.setVoteUp(0);
         mCommentServiceImpl.save(comment);
-
-
         // 文章评论数量加一
         post.setCommentCount(post.getCommentCount() + 1);
         mPostServiceImpl.updateById(post);
 
         // 本周热议数据更新
         mPostServiceImpl.addCommentCountforWeekRank(postId, true);
-
         // 通知作者有人评论了你的文章
         if (comment.getUserId() != post.getId()) {
             MUserMessage message = new MUserMessage();
@@ -332,8 +327,6 @@ public class PostController extends BaseController {
                 message.setCreated(new Date());
                 message.setStatus(0);
                 mUserMessageServiceImpl.save(message);
-
-
                 action.setAction("回复");
                 // 即时通知被@的用户
             }
@@ -341,9 +334,8 @@ public class PostController extends BaseController {
         } else {
             action.setAction("评论");
         }
+        //保存用户的最近回复
         mUserActionServiceImpl.save(action);
-
-
         return ResultDto.ok().action("/post/" + postId);
     }
 

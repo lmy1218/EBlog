@@ -26,25 +26,20 @@ public class HotsTemplate extends TemplateDirective {
     @Override
     public void execute(DirectiveHandler handler) throws Exception {
         String weekRankKey = "week:rank";
-
         Set<ZSetOperations.TypedTuple> typedTuples = redisUtil.getZSetRank(weekRankKey, 0, 6);
 
         List<Map> hotPosts = new ArrayList<>();
-
         for (ZSetOperations.TypedTuple typedTuple : typedTuples) {
             Map<String, Object> map = new HashMap<>();
-
             Object value = typedTuple.getValue(); // post的id
             String postKey = "rank:post:" + value;
-
+            System.out.println("========!!!" + redisUtil.hget(postKey, "post:title"));
             map.put("id", value);
             map.put("title", redisUtil.hget(postKey, "post:title"));
             map.put("commentCount", typedTuple.getScore());
-
+            System.out.println("=============" + map.get("title"));
             hotPosts.add(map);
         }
-
         handler.put(RESULTS, hotPosts).render();
-
     }
 }

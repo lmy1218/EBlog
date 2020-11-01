@@ -45,7 +45,6 @@ public class ViewCountSyncTask {
         log.info("----定时器开始同步阅读数到数据库！----");
         // 查询出所有缓存文章的key
         Set<String> keys = redisTemplate.keys("rank:post:*");
-
         // 把存在viewCount的文章过滤出来
         List<String> ids = new ArrayList<>();
         Map<String, Integer> map = new HashMap<>();
@@ -57,29 +56,23 @@ public class ViewCountSyncTask {
                 ids.add(postId);
             }
         }
-
         if (ids.isEmpty()) return;
-
         // 更新阅读量
         List<MPost> posts = mPostServiceImpl.list(new QueryWrapper<MPost>().in("id", ids));
-
         if (posts.isEmpty()) return;
         // 重新设置阅读量
         List<MPost> mPosts = posts.stream().map(p -> {
             p.setViewCount(map.get(p.getId() + ""));
             return p;
         }).collect(Collectors.toList());
-
         // 更新到数据库
         boolean isSucc = mPostServiceImpl.updateBatchById(mPosts);
-
         if (isSucc) {
             ids.stream().forEach(id -> {
                 redisUtil.hdel("rank:post:" + id, "post:viewCount");
             });
             log.info("---------阅读数同步成功--------");
         }
-
     }
 
 }

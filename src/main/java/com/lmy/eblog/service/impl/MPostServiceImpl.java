@@ -125,12 +125,9 @@ public class MPostServiceImpl extends ServiceImpl<MPostMapper, MPost> implements
     // 缓存博客的基本信息
     private void hashCachPost(MPost post, long expireTime) {
         String key = "rank:post:" + post.getId();
-        if(! redisUtil.hasKey(key)) {
-            redisUtil.hset(key, "post:id", post.getId(), expireTime);
-            redisUtil.hset(key, "post:title", post.getTitle(), expireTime);
-            redisUtil.hset(key, "post:commentCount", post.getCommentCount(), expireTime);
-            redisUtil.hset(key, "post:viewCount", post.getViewCount(), expireTime);
-        }
+        redisUtil.hset(key, "post:id", post.getId(), expireTime);
+        redisUtil.hset(key, "post:title", post.getTitle(), expireTime);
+        redisUtil.hset(key, "post:commentCount", post.getCommentCount(), expireTime);
     }
 
 
@@ -167,12 +164,12 @@ public class MPostServiceImpl extends ServiceImpl<MPostMapper, MPost> implements
         // 首相去redis中查询阅读数
         String key = "rank:post:" + post.getId();
         Integer viewCount = (Integer) redisUtil.hget(key, "post:viewCount");
+        // 判断缓存中是否有此文章
         if (viewCount != null) {
             post.setViewCount(viewCount + 1);
         } else {
             post.setViewCount(post.getViewCount() + 1);
         }
-
         // 同步到缓存中
         redisUtil.hset(key, "post:viewCount", post.getViewCount());
     }

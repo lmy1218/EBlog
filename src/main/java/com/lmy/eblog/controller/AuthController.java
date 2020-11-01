@@ -14,7 +14,6 @@ import com.lmy.eblog.dto.ResultDto;
 import com.lmy.eblog.entity.MUser;
 import com.lmy.eblog.service.MUserService;
 import com.lmy.eblog.utils.ValidationUtil;
-import org.apache.catalina.security.SecurityUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import static com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY;
 
 /**
  * @author Lmy
@@ -129,7 +127,7 @@ public class AuthController extends BaseController {
         // 持久化到数据库
         ResultDto<Void> resultDto = mUserServiceImpl.insUser(user);
 
-        return ResultDto.ok().action("/login");
+        return resultDto.action("/login");
     }
 
     /**

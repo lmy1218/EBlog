@@ -66,7 +66,7 @@
     <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
 
         <li class="layui-nav-item <#if level == 0>layui-this</#if>">
-            <a href="/user/home">
+            <a href="/user/${userInfo.id}">
                 <i class="layui-icon">&#xe609;</i>
                 我的主页
             </a>

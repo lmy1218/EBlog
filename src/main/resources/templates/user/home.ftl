@@ -65,7 +65,7 @@
               <li>
                 <p>
                   <span>${timeAgo(info.created)}</span>
-                  在<a href="" target="_blank">${info.title}</a>中${info.action}：
+                  在<a href="/post/${info.postId}" target="_blank">${info.title}</a>中${info.action}：
                 </p>
                 <div class="home-dacontent">
                   ${info.content}

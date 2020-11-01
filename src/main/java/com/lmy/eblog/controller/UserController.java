@@ -41,26 +41,29 @@ import java.util.Map;
  * @date 2020/10/3 22:56
  **/
 @Controller
-@RequestMapping("user")
 public class UserController extends BaseController {
 
     @Autowired
     private AliyunProvider aliyunProvider;
 
+
+
+
     /**
      * 展示我的主页
      * @return
      */
-    @GetMapping("home")
-    public String home() {
-        // 查询出用户信息
-        MUser user = mUserServiceImpl.getById(getUserInfo().getId());
-        user.setPassword(null);
+    @GetMapping("/user/{id}")
+    public String home(@PathVariable("id") Long id) {
+
+        // 查询用户信息
+        MUser user = mUserServiceImpl.getById(id);
+
         // 展示最近评论
-        List<UserCommentVo> userCommentVo = mUserActionServiceImpl.selectList(user.getId());
+        List<UserCommentVo> userCommentVo = mUserActionServiceImpl.selectList(id);
         // 查询出最近三十天发布的文章
         List<MPost> posts = mPostServiceImpl.list(new QueryWrapper<MPost>()
-                .eq("user_id", user.getId())
+                .eq("user_id", id)
                 .gt("created", DateUtil.offsetDay(new Date(),-30))
                 .orderByDesc("created")
         );
@@ -76,7 +79,7 @@ public class UserController extends BaseController {
      * 展示用户设置
      * @return
      */
-    @GetMapping("set")
+    @GetMapping("user/set")
     public String userSet() {
         // 查询出用户信息
         MUser user = mUserServiceImpl.getById(getUserInfo().getId());
@@ -93,7 +96,7 @@ public class UserController extends BaseController {
      * @param user
      * @return
      */
-    @PostMapping("set")
+    @PostMapping("user/set")
     @ResponseBody
     public ResultDto doSet(MUser user) {
         if (user == null) {
@@ -117,7 +120,6 @@ public class UserController extends BaseController {
         if (user.getEmail() == null || !user.getEmail().equals(oldUser.getEmail())) {
             return ResultDto.fail("邮箱不能更改或邮箱为空！");
         }
-
         // 组装User
         oldUser.setGender(user.getGender());
         oldUser.setUsername(user.getUsername());
@@ -136,7 +138,6 @@ public class UserController extends BaseController {
         userInfo.setUsername(oldUser.getUsername());
         // 将用户信息存入session
         SecurityUtils.getSubject().getSession().setAttribute("userInfo", userInfo);
-
         return ResultDto.ok().action("/user/set#info");
     }
 
@@ -146,7 +147,7 @@ public class UserController extends BaseController {
      * @param file
      * @return
      */
-    @PostMapping("upload")
+    @PostMapping("user/upload")
     @ResponseBody
     public ResultDto<String> uploadAvatar(@RequestParam(value = "file") MultipartFile file) {
         if (file == null) {
@@ -154,6 +155,7 @@ public class UserController extends BaseController {
         }
         String url = "";
         try {
+            // 上传到OSS并返回URL
             url = aliyunProvider.upload(file.getInputStream(), file.getOriginalFilename());
         } catch (IOException e) {
             e.printStackTrace();
@@ -170,7 +172,7 @@ public class UserController extends BaseController {
      * @param repass
      * @return
      */
-    @PostMapping("repass")
+    @PostMapping("user/repass")
     @ResponseBody
     public ResultDto repss(String nowpass, String password, String repass) {
         if (password == null || !password.equals(repass)) {
@@ -194,7 +196,7 @@ public class UserController extends BaseController {
      * 展示用户中心
      * @return
      */
-    @GetMapping("index")
+    @GetMapping("user/index")
     public String index() {
         // 查询出用户信息
         MUser oldUser = mUserServiceImpl.getById(getUserInfo().getId());
@@ -212,14 +214,13 @@ public class UserController extends BaseController {
      * 展示消息中心
      * @return
      */
-    @GetMapping("message")
+    @GetMapping("user/message")
     public String message() {
         // 查询出当前用户的消息
         IPage<UserMessageVo> page = mUserMessageServiceImpl.paging(getPage(), new QueryWrapper<MUserMessage>()
                 .eq("to_user_id", getUserInfo().getId())
                 .orderByDesc("created")
         );
-
         // 把消息改成已读状态
         List<Long> ids = new ArrayList<>();
         for(UserMessageVo messageVo : page.getRecords()) {
@@ -229,7 +230,6 @@ public class UserController extends BaseController {
         }
         // 批量修改成已读
         mUserMessageServiceImpl.updateToReaded(ids);
-
         req.setAttribute("messages", page);
         return "/user/message";
     }
@@ -238,7 +238,7 @@ public class UserController extends BaseController {
      * 获取我发布的文章
      * @return
      */
-    @GetMapping("public")
+    @GetMapping("user/public")
     @ResponseBody
     public ResultDto userPublic() {
         // 根据用户ID查询发布的文章
@@ -252,7 +252,7 @@ public class UserController extends BaseController {
      * 获取我收藏的文章
      * @return
      */
-    @GetMapping("collection")
+    @GetMapping("user/collection")
     @ResponseBody
     public ResultDto collection() {
         // 查询收藏的文章
@@ -281,7 +281,7 @@ public class UserController extends BaseController {
     }
 
 
-    @PostMapping("message/nums")
+    @PostMapping("user/message/nums")
     @ResponseBody
     public Map msgNums() {
         // 查询当前用户未读的消息

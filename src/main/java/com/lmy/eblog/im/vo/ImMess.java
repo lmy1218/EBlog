@@ -9,7 +9,7 @@ public class ImMess {
 
     private String username;
     private String avatar;
-    private String type;//聊天窗口来源类型，从发送消息传递的to里面获取
+    private String type; // 聊天窗口来源类型，从发送消息传递的to里面获取
     private String content;
     private Long cid;
     private Boolean mine;
