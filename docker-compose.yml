@@ -6,7 +6,7 @@ services:
     ports:
       - "6379:6379"
   mysql:
-    restart: 
+    restart: on-failure
     image: mysql/mysql-server:5.7
     container_name: app_mysql
     ports:
