@@ -22,7 +22,7 @@ spring:
     port: 6379
   data:
     elasticsearch:
-      cluster-name: elasticsearch
+      cluster-name: es
       cluster-nodes: localhost:9200
       repositories:
         enabled: true
