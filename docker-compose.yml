@@ -1,21 +1,33 @@
 version: "3.8"
 services:
   redis:
+    restart: on-failure
     image: "redis:latest"
     container_name: app_redis
     ports:
       - "6379:6379"
-  mysql:
+  blog-mysql:
     restart: on-failure
     image: mysql/mysql-server:5.7
-    container_name: app_mysql
+    container_name: blog_mysql
     ports:
       - 3306:3306
     volumes:
       - "./db:/var/lib/mysql"
-      - "./conf/my.cnf:/etc/my.cnf"
       - "./init:/docker-entrypoint-initdb.d/"
     environment:
       MYSQL_ROOT_PASSWORD: "121891"
+  rabbitmq:
+    restart: on-failure
+    image: rabbitmq:3.8.9
+    environment:
+      RABBITMQ_DEFAULT_USER: "root"
+      RABBITMQ_DEFAULT_PASS: "121891"
+      RABBITMQ_DEFAULT_VHOST: "eblog"
+    ports:
+    - 8086:8080
+    - 5672:5672
+    - 15672:15672
+
 
 

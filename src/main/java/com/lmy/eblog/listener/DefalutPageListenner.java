@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DefalutPageListenner implements CommandLineRunner {
-    private static String START_COMMAND = "cmd /c start http://localhost:8080/index";
+    private static String START_COMMAND = "cmd /c start http://localhost:8888/index";
     @Override
     public void run(String... strings) throws Exception {
         System.out.println("欢迎光临李明阳个人博客！");

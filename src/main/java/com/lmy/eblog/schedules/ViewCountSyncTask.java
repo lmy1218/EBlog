@@ -56,10 +56,14 @@ public class ViewCountSyncTask {
                 ids.add(postId);
             }
         }
-        if (ids.isEmpty()) return;
+        if (ids.isEmpty()) {
+            return;
+        }
         // 更新阅读量
         List<MPost> posts = mPostServiceImpl.list(new QueryWrapper<MPost>().in("id", ids));
-        if (posts.isEmpty()) return;
+        if (posts.isEmpty()) {
+            return;
+        }
         // 重新设置阅读量
         List<MPost> mPosts = posts.stream().map(p -> {
             p.setViewCount(map.get(p.getId() + ""));

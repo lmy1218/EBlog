@@ -1,11 +1,11 @@
 server:
-  port: 8080
+  port: 8888
 spring:
   datasource:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
     # 使用SQL分析的时候
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
-    url: jdbc:p6spy:mysql://0.0.0.0:3306/eblog?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=UTC
+    url: jdbc:p6spy:mysql://localhost:3306/eblog?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=UTC
     username: root
     password: 121891
   freemarker:
@@ -18,19 +18,19 @@ spring:
       max-file-size: 10000000
       max-request-size: 20000000
   redis:
-    host: 0.0.0.0
+    host: localhost
     port: 6379
   data:
     elasticsearch:
       cluster-name: elasticsearch
-      cluster-nodes: 192.168.75.140:9300
+      cluster-nodes: localhost:9200
       repositories:
         enabled: true
   rabbitmq:
-    host: 192.168.75.139
-    username: leyou
-    password: leyou
-    virtual-host: /leyou
+    host: localhost
+    username: root
+    password: 121891
+    virtual-host: eblog
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**Mapper.xml
