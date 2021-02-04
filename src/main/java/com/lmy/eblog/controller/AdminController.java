@@ -10,22 +10,21 @@ package com.lmy.eblog.controller;
 import cn.hutool.core.map.MapUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lmy.eblog.dto.ResultDto;
-import com.lmy.eblog.entity.MPost;
-import com.lmy.eblog.search.model.PostDocument;
-import com.lmy.eblog.search.repository.PostRepository;
-import com.lmy.eblog.vo.PostVo;
+import com.lmy.eblog.pojo.dto.ResultDto;
+import com.lmy.eblog.pojo.entity.MPost;
+import com.lmy.eblog.extension.search.model.PostDocument;
+import com.lmy.eblog.extension.search.repository.PostRepository;
+import com.lmy.eblog.pojo.vo.PostVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Lmy
@@ -38,14 +37,15 @@ import java.util.stream.Collectors;
 public class AdminController extends BaseController {
 
 
-    @Autowired
+    @Resource
     PostRepository postRepository;
 
 
     /**
      * 管理员删除、置顶、加精
-     * @param id 文章ID
-     * @param rank 0 表示取消 1 表示操作
+     *
+     * @param id    文章ID
+     * @param rank  0 表示取消 1 表示操作
      * @param field 操作类型
      * @return
      */
@@ -62,10 +62,10 @@ public class AdminController extends BaseController {
             mUserCollectionServiceImpl.removeByMap(MapUtil.of("post_id", id));
             mUserActionServiceImpl.removeByMap(MapUtil.of("post_id", id));
             return ResultDto.ok();
-        } else if ("stick".equals(field)){
+        } else if ("stick".equals(field)) {
             // 置顶
             post.setLevel(rank);
-        } else if ("status".equals(field)){
+        } else if ("status".equals(field)) {
             // 加精
             post.setRecommend(rank == 1);
         }
@@ -78,6 +78,7 @@ public class AdminController extends BaseController {
 
     /**
      * 同步es数据
+     *
      * @return
      */
     @PostMapping("init")
@@ -88,7 +89,7 @@ public class AdminController extends BaseController {
         int rows = 100;
         int size = 0;
         int tatol = 0;
-        do{
+        do {
             Page pg = new Page(page, rows);
             IPage<PostVo> posts = mPostServiceImpl.paging(pg, null, null, null, null, "created");
             List<PostVo> postList = posts.getRecords();
@@ -104,7 +105,7 @@ public class AdminController extends BaseController {
             tatol += size;
         } while (size == 100);
 
-        return ResultDto.success("Es数据同步成功，共 "+ tatol + " 条记录！", null);
+        return ResultDto.success("Es数据同步成功，共 " + tatol + " 条记录！", null);
     }
 
 }

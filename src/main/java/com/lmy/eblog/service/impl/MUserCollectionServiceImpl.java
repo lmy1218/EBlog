@@ -1,6 +1,6 @@
 package com.lmy.eblog.service.impl;
 
-import com.lmy.eblog.entity.MUserCollection;
+import com.lmy.eblog.pojo.entity.MUserCollection;
 import com.lmy.eblog.mapper.MUserCollectionMapper;
 import com.lmy.eblog.service.MUserCollectionService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

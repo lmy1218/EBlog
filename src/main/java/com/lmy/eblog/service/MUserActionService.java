@@ -1,8 +1,8 @@
 package com.lmy.eblog.service;
 
-import com.lmy.eblog.entity.MUserAction;
+import com.lmy.eblog.pojo.entity.MUserAction;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lmy.eblog.vo.UserCommentVo;
+import com.lmy.eblog.pojo.vo.UserCommentVo;
 
 import java.util.List;
 

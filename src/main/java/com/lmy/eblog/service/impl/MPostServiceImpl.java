@@ -6,12 +6,12 @@ import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lmy.eblog.entity.MPost;
+import com.lmy.eblog.pojo.entity.MPost;
 import com.lmy.eblog.mapper.MPostMapper;
 import com.lmy.eblog.service.MPostService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lmy.eblog.utils.RedisUtil;
-import com.lmy.eblog.vo.PostVo;
+import com.lmy.eblog.pojo.vo.PostVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author 公众号：java思维导图
@@ -35,17 +35,18 @@ public class MPostServiceImpl extends ServiceImpl<MPostMapper, MPost> implements
 
     /**
      * 分页查询博客信息
-     * @param page 分页信息
+     *
+     * @param page       分页信息
      * @param categoryId 分类id
-     * @param userId 发布者ID
-     * @param level 置顶
-     * @param recommend 精选
-     * @param order 排序字段
+     * @param userId     发布者ID
+     * @param level      置顶
+     * @param recommend  精选
+     * @param order      排序字段
      * @return
      */
     @Override
     public IPage<PostVo> paging(Page page, Long categoryId, Long userId, Integer level, Boolean recommend, String order) {
-        if(level == null) {
+        if (level == null) {
             level = -1;
         }
 
@@ -62,6 +63,7 @@ public class MPostServiceImpl extends ServiceImpl<MPostMapper, MPost> implements
 
     /**
      * 根据id查询博客详情
+     *
      * @param id
      * @return
      */
@@ -133,8 +135,9 @@ public class MPostServiceImpl extends ServiceImpl<MPostMapper, MPost> implements
 
     /**
      * 当有新增评论时，更新缓存中评论的数量
+     *
      * @param postId
-     * @param isAdd 是否是新增
+     * @param isAdd  是否是新增
      */
     @Override
     public void addCommentCountforWeekRank(Long postId, boolean isAdd) {
@@ -157,6 +160,7 @@ public class MPostServiceImpl extends ServiceImpl<MPostMapper, MPost> implements
 
     /**
      * 阅读量新增
+     *
      * @param post
      */
     @Override

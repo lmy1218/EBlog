@@ -1,9 +1,9 @@
 package com.lmy.eblog.service;
 
-import com.lmy.eblog.dto.ResultDto;
-import com.lmy.eblog.entity.MUser;
+import com.lmy.eblog.pojo.dto.ResultDto;
+import com.lmy.eblog.pojo.entity.MUser;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lmy.eblog.shiro.UserInfo;
+import com.lmy.eblog.extension.shiro.UserInfo;
 
 /**
  * <p>

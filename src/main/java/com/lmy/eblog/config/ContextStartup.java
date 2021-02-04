@@ -8,7 +8,7 @@ package com.lmy.eblog.config;
  */
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.lmy.eblog.entity.MCategory;
+import com.lmy.eblog.pojo.entity.MCategory;
 import com.lmy.eblog.service.MCategoryService;
 import com.lmy.eblog.service.MPostService;
 import org.springframework.beans.factory.annotation.Autowired;

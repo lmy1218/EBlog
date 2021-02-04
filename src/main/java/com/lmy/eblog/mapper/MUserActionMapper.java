@@ -1,8 +1,8 @@
 package com.lmy.eblog.mapper;
 
-import com.lmy.eblog.entity.MUserAction;
+import com.lmy.eblog.pojo.entity.MUserAction;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.lmy.eblog.vo.UserCommentVo;
+import com.lmy.eblog.pojo.vo.UserCommentVo;
 import org.apache.ibatis.annotations.Param;
 
 /**

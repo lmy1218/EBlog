@@ -3,10 +3,10 @@ package com.lmy.eblog.service.impl;
 import cn.hutool.core.util.RandomUtil;
 
 import com.lmy.eblog.config.Consts;
-import com.lmy.eblog.im.vo.ImMess;
-import com.lmy.eblog.im.vo.ImUser;
+import com.lmy.eblog.extension.im.vo.ImMess;
+import com.lmy.eblog.extension.im.vo.ImUser;
 import com.lmy.eblog.service.ChatService;
-import com.lmy.eblog.shiro.UserInfo;
+import com.lmy.eblog.extension.shiro.UserInfo;
 import com.lmy.eblog.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;

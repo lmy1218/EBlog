@@ -2,9 +2,9 @@ package com.lmy.eblog.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lmy.eblog.entity.MComment;
+import com.lmy.eblog.pojo.entity.MComment;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lmy.eblog.vo.CommentVo;
+import com.lmy.eblog.pojo.vo.CommentVo;
 
 /**
  * <p>

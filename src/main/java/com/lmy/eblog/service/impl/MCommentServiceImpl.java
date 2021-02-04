@@ -3,11 +3,11 @@ package com.lmy.eblog.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lmy.eblog.entity.MComment;
+import com.lmy.eblog.pojo.entity.MComment;
 import com.lmy.eblog.mapper.MCommentMapper;
 import com.lmy.eblog.service.MCommentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.lmy.eblog.vo.CommentVo;
+import com.lmy.eblog.pojo.vo.CommentVo;
 import org.springframework.stereotype.Service;
 
 /**

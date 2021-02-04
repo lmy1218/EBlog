@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lmy.eblog.mapper.MPostMapper">
     <!--分页查询博客信息-->
-    <select id="selectPosts" resultType="com.lmy.eblog.vo.PostVo">
+    <select id="selectPosts" resultType="com.lmy.eblog.pojo.vo.PostVo">
         select p.*, mu.id as authorId, mu.username as authorName, mu.avatar as authorAvatar, mc.name as categoryName
         from m_post p
          left join m_user mu on p.user_id = mu.id
@@ -10,7 +10,7 @@
          ${ew.customSqlSegment}
     </select>
     <!--查询单个博客-->
-    <select id="selectOnePost" resultType="com.lmy.eblog.vo.PostVo">
+    <select id="selectOnePost" resultType="com.lmy.eblog.pojo.vo.PostVo">
         select p.*, mu.id as authorId, mu.username as authorName, mu.avatar as authorAvatar, mc.name as categoryName
         from m_post p
          left join m_user mu on p.user_id = mu.id
@@ -19,7 +19,7 @@
     </select>
 
 
-    <select id="selectPost" resultType="com.lmy.eblog.vo.PostVo">
+    <select id="selectPost" resultType="com.lmy.eblog.pojo.vo.PostVo">
         SELECT
             p.*,
 

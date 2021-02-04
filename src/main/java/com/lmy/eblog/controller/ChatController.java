@@ -2,8 +2,8 @@ package com.lmy.eblog.controller;
 
 import cn.hutool.core.map.MapUtil;
 import com.lmy.eblog.config.Consts;
-import com.lmy.eblog.dto.ResultDto;
-import com.lmy.eblog.im.vo.ImUser;
+import com.lmy.eblog.pojo.dto.ResultDto;
+import com.lmy.eblog.extension.im.vo.ImUser;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
