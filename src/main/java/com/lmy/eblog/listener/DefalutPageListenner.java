@@ -8,8 +8,8 @@ package com.lmy.eblog.listener;/************************************************
  * @version V1.0
  */
 
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
+//import org.springframework.boot.CommandLineRunner;
+//import org.springframework.stereotype.Component;
 
 /**
  * @author ryan
@@ -17,12 +17,12 @@ import org.springframework.stereotype.Component;
  * @Description 默认访问页面监听器
  * @date 2019/3/11
  */
-@Component
-public class DefalutPageListenner implements CommandLineRunner {
-    private static String START_COMMAND = "cmd /c start http://localhost:8888/start";
-    @Override
-    public void run(String... strings) throws Exception {
-        System.out.println("欢迎光临李明阳个人博客！");
-        Runtime.getRuntime().exec(START_COMMAND);
-    }
-}
+//@Component
+//public class DefalutPageListenner implements CommandLineRunner {
+//    private static String START_COMMAND = "cmd /c start http://localhost:8888/start";
+//    @Override
+//    public void run(String... strings) throws Exception {
+//        System.out.println("欢迎光临李明阳个人博客！");
+//        Runtime.getRuntime().exec(START_COMMAND);
+//    }
+//}
