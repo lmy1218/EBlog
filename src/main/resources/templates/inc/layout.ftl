@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="/res/layui/css/layui.css">
         <link rel="stylesheet" href="/res/css/global.css">
         <link rel="stylesheet" href="/res/css/my.css">
+        <link rel="shortcut icon" href="/res/images/mylog.png">
 
         <script src="/res/layui/layui.js"></script>
         <script src="/res/js/jquery.min.js"></script>

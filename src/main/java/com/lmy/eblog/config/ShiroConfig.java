@@ -68,6 +68,7 @@ public class ShiroConfig {
         hashMap.put("/login", "anon");
         hashMap.put("/start", "anon");
 
+
         filterFactoryBean.setFilterChainDefinitionMap(hashMap);
 
         return filterFactoryBean;

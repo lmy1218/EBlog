@@ -22,6 +22,7 @@ import com.lmy.eblog.extension.provider.AliyunProvider;
 import com.lmy.eblog.extension.shiro.UserInfo;
 import com.lmy.eblog.pojo.vo.UserCommentVo;
 import com.lmy.eblog.pojo.vo.UserMessageVo;
+import org.apache.catalina.User;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -292,5 +293,11 @@ public class UserController extends BaseController {
         return MapUtil.builder("status", 0).put("count", count).build();
     }
 
+
+
+    @GetMapping("user/reply-Week-List")
+    public ResultDto<List<User>> getUserReplyList() {
+        return mUserActionServiceImpl.findUserReplyList();
+    }
 
 }
