@@ -135,7 +135,7 @@
               </div>
               <div class="layui-form-item">
                 <input type="hidden" name="postId" value="${post.id}">
-                <button class="layui-btn" lay-filter="*" lay-submit>提交回复</button>
+                <button style="background-color: #888;" class="layui-btn" lay-filter="*" lay-submit>提交回复</button>
               </div>
             </form>
           </div>

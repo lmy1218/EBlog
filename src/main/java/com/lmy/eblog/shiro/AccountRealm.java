@@ -17,6 +17,8 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+
 /**
  * @author Lmy
  * @ClassName AccountRealm
@@ -27,7 +29,7 @@ import org.springframework.stereotype.Component;
 public class AccountRealm extends AuthorizingRealm {
 
 
-    @Autowired
+    @Resource
     private MUserService mUserServiceImpl;
 
     /**

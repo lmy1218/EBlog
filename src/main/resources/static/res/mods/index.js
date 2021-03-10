@@ -611,11 +611,11 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
   //固定Bar
   util.fixbar({
     bar1: '&#xe642;'
-    ,bgcolor: '#009688'
+    ,bgcolor: '#666'
     ,click: function(type){
       if(type === 'bar1'){
-        layer.msg('打开 index.js，开启发表新帖的路径');
-        //location.href = 'jie/add.html';
+        // layer.msg('打开 index.js，开启发表新帖的路径');
+        location.href = 'http://47.108.237.10:8888/post/edit';
       }
     }
   });

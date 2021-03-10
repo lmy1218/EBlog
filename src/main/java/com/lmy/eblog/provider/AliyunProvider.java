@@ -60,7 +60,7 @@ public class AliyunProvider {
         // 关闭OSSClient。
         ossClient.shutdown();
 
-        Date expiration = new Date(new Date().getTime() + 3600l * 1000 * 24 * 365 * 10);
+        Date expiration = new Date(System.currentTimeMillis() + 3600L * 1000 * 24 * 365 * 10);
         String url = ossClient.generatePresignedUrl(bucketName, generateFileName, expiration).toString();
         if (StringUtils.isNotBlank(url)) {
             String[] urls = url.split("\\?");

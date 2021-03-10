@@ -66,6 +66,7 @@ public class ShiroConfig {
 
         hashMap.put("/websocket", "anon");
         hashMap.put("/login", "anon");
+        hashMap.put("/start", "anon");
 
         filterFactoryBean.setFilterChainDefinitionMap(hashMap);
 

@@ -63,7 +63,7 @@
 
 <#--基本设置左侧导航栏-->
 <#macro usercenterleft level>
-    <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
+    <ul style="background-color: #999 !important;" class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
 
         <li class="layui-nav-item <#if level == 0>layui-this</#if>">
             <a href="/user/${userInfo.id}">

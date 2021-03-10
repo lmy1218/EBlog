@@ -15,12 +15,14 @@
             </@shiro.user>
         </ul>
 
-        <div class="fly-column-right layui-hide-xs">
+        <div class="fly-column-right layui-hide-xs" >
             <span class="fly-search"><i class="layui-icon"></i></span>
-            <a href="/post/edit" class="layui-btn">发表新帖</a>
+            <a href="/post/edit" class="layui-btn" style="border-radius: 31px;
+    background-color: #888;">发表新帖</a>
         </div>
-        <div class="layui-hide-sm layui-show-xs-block" style="margin-top: -10px; padding-bottom: 10px; text-align: center;">
-            <a href="/post/edit" class="layui-btn">发表新帖</a>
-        </div>
+<#--        <div class="layui-hide-sm layui-show-xs-block" style="margin-top: -10px; padding-bottom: 10px; text-align: center;">-->
+<#--            <a href="/post/edit" class="layui-btn" style="    border-radius: 31px;-->
+<#--    background-color: #888;">发表新帖</a>-->
+<#--        </div>-->
     </div>
 </div>

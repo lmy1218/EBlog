@@ -25,6 +25,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IndexController extends BaseController {
 
 
+    @GetMapping("/start")
+    public String start() {
+        return "start";
+    }
+
+
     /**
      * 首页展示以及博客分页
      * @return
