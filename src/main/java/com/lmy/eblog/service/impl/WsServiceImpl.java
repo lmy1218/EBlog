@@ -8,7 +8,7 @@ package com.lmy.eblog.service.impl;
  */
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.lmy.eblog.entity.MUserMessage;
+import com.lmy.eblog.pojo.entity.MUserMessage;
 import com.lmy.eblog.service.MUserMessageService;
 import com.lmy.eblog.service.WsService;
 import org.springframework.beans.factory.annotation.Autowired;

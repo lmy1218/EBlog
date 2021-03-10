@@ -4,9 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lmy.eblog.entity.MComment;
+import com.lmy.eblog.pojo.entity.MComment;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.lmy.eblog.vo.CommentVo;
+import com.lmy.eblog.pojo.vo.CommentVo;
 import org.apache.ibatis.annotations.Param;
 
 /**

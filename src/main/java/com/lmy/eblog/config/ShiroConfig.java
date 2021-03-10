@@ -1,8 +1,8 @@
 package com.lmy.eblog.config;
 
 import cn.hutool.core.map.MapUtil;
-import com.lmy.eblog.shiro.AccountRealm;
-import com.lmy.eblog.shiro.AuthFilter;
+import com.lmy.eblog.extension.shiro.AccountRealm;
+import com.lmy.eblog.extension.shiro.AuthFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.mgt.SecurityManager;
 
@@ -67,6 +67,7 @@ public class ShiroConfig {
         hashMap.put("/websocket", "anon");
         hashMap.put("/login", "anon");
         hashMap.put("/start", "anon");
+
 
         filterFactoryBean.setFilterChainDefinitionMap(hashMap);
 

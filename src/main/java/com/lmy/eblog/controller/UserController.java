@@ -13,15 +13,16 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.lmy.eblog.dto.ResultDto;
-import com.lmy.eblog.entity.MPost;
-import com.lmy.eblog.entity.MUser;
-import com.lmy.eblog.entity.MUserCollection;
-import com.lmy.eblog.entity.MUserMessage;
-import com.lmy.eblog.provider.AliyunProvider;
-import com.lmy.eblog.shiro.UserInfo;
-import com.lmy.eblog.vo.UserCommentVo;
-import com.lmy.eblog.vo.UserMessageVo;
+import com.lmy.eblog.pojo.dto.ResultDto;
+import com.lmy.eblog.pojo.entity.MPost;
+import com.lmy.eblog.pojo.entity.MUser;
+import com.lmy.eblog.pojo.entity.MUserCollection;
+import com.lmy.eblog.pojo.entity.MUserMessage;
+import com.lmy.eblog.extension.provider.AliyunProvider;
+import com.lmy.eblog.extension.shiro.UserInfo;
+import com.lmy.eblog.pojo.vo.UserCommentVo;
+import com.lmy.eblog.pojo.vo.UserMessageVo;
+import org.apache.catalina.User;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -292,5 +293,11 @@ public class UserController extends BaseController {
         return MapUtil.builder("status", 0).put("count", count).build();
     }
 
+
+
+    @GetMapping("user/reply-Week-List")
+    public ResultDto<List<User>> getUserReplyList() {
+        return mUserActionServiceImpl.findUserReplyList();
+    }
 
 }

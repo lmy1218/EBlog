@@ -2,18 +2,20 @@ package com.lmy.eblog.service.impl;
 
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.lmy.eblog.dto.ResultDto;
-import com.lmy.eblog.entity.MUser;
+import com.lmy.eblog.pojo.dto.ResultDto;
+import com.lmy.eblog.pojo.entity.MUser;
 import com.lmy.eblog.mapper.MUserMapper;
 import com.lmy.eblog.service.MUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.lmy.eblog.shiro.UserInfo;
+import com.lmy.eblog.extension.shiro.UserInfo;
+import org.apache.catalina.User;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -83,6 +85,7 @@ public class MUserServiceImpl extends ServiceImpl<MUserMapper, MUser> implements
         BeanUtils.copyProperties(user, userInfo);
         return userInfo;
     }
+
 
 
 }

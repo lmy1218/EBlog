@@ -3,9 +3,9 @@ package com.lmy.eblog.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lmy.eblog.entity.MPost;
+import com.lmy.eblog.pojo.entity.MPost;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lmy.eblog.vo.PostVo;
+import com.lmy.eblog.pojo.vo.PostVo;
 
 /**
  * <p>

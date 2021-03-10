@@ -1,6 +1,6 @@
 package com.lmy.eblog.service.impl;
 
-import com.lmy.eblog.entity.MCategory;
+import com.lmy.eblog.pojo.entity.MCategory;
 import com.lmy.eblog.mapper.MCategoryMapper;
 import com.lmy.eblog.service.MCategoryService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

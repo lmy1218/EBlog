@@ -28,12 +28,27 @@ spring:
         enabled: true
   rabbitmq:
     host: 47.108.237.10
+<<<<<<< HEAD
+=======
+    port: 5672
+>>>>>>> 2424dccb50a4d66e0e1179a60a0a11b05658efc2
     username: root
     password: 121891
     virtual-host: eblog
 
+
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**Mapper.xml
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  level:
+    root: ERROR
+    org.springframework.web: ERROR
+    com.lmy.eblog: DEBUG
+    com.lmy.eblog.mapper: DEBUG
 
 yun:
   endpoint: https://oss-cn-shenzhen.aliyuncs.com

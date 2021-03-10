@@ -8,10 +8,9 @@ package com.lmy.eblog.controller;
  */
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lmy.eblog.search.service.SearchService;
+import com.lmy.eblog.extension.search.service.SearchService;
 import com.lmy.eblog.service.*;
-import com.lmy.eblog.service.impl.MCategoryServiceImpl;
-import com.lmy.eblog.shiro.UserInfo;
+import com.lmy.eblog.extension.shiro.UserInfo;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

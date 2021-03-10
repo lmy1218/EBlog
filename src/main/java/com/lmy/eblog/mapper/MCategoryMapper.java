@@ -1,6 +1,6 @@
 package com.lmy.eblog.mapper;
 
-import com.lmy.eblog.entity.MCategory;
+import com.lmy.eblog.pojo.entity.MCategory;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

@@ -1,10 +1,10 @@
 package com.lmy.eblog.config;
 
 import com.jagregory.shiro.freemarker.ShiroTags;
-import com.lmy.eblog.templates.HotsTemplate;
-import com.lmy.eblog.templates.PostsTemplate;
-import com.lmy.eblog.templates.TimeAgoMethod;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.lmy.eblog.extension.freemarker.templates.HotsTemplate;
+import com.lmy.eblog.extension.freemarker.templates.PostsTemplate;
+import com.lmy.eblog.extension.freemarker.templates.ReplyTemplate;
+import com.lmy.eblog.extension.freemarker.templates.TimeAgoMethod;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
@@ -22,6 +22,9 @@ public class FreemarkerConfig {
     @Resource
     private HotsTemplate hotsTemplate;
 
+    @Resource
+    private ReplyTemplate replyTemplate;
+
 
     @PostConstruct
     public void setUp() {
@@ -29,6 +32,7 @@ public class FreemarkerConfig {
         configuration.setSharedVariable("posts", postsTemplate);
         configuration.setSharedVariable("hots", hotsTemplate);
         configuration.setSharedVariable("shiro", new ShiroTags());
+        configuration.setSharedVariable("reply", replyTemplate);
     }
 
 }

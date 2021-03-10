@@ -2,8 +2,8 @@ package com.lmy.eblog.service;
 
 
 
-import com.lmy.eblog.im.vo.ImMess;
-import com.lmy.eblog.im.vo.ImUser;
+import com.lmy.eblog.extension.im.vo.ImMess;
+import com.lmy.eblog.extension.im.vo.ImUser;
 
 import java.util.List;
 

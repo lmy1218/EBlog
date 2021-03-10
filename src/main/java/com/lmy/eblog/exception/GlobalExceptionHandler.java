@@ -8,7 +8,7 @@ package com.lmy.eblog.exception;
  */
 
 import cn.hutool.json.JSONUtil;
-import com.lmy.eblog.dto.ResultDto;
+import com.lmy.eblog.pojo.dto.ResultDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
