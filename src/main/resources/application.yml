@@ -1,5 +1,5 @@
 server:
-  port: 8888
+  port: 80
 spring:
   datasource:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
@@ -28,10 +28,7 @@ spring:
         enabled: true
   rabbitmq:
     host: 47.108.237.10
-<<<<<<< HEAD
-=======
     port: 5672
->>>>>>> 2424dccb50a4d66e0e1179a60a0a11b05658efc2
     username: root
     password: 121891
     virtual-host: eblog
