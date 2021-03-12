@@ -21,6 +21,6 @@ public interface MUserActionMapper extends BaseMapper<MUserAction> {
 
     UserCommentVo selectCommentInfo(@Param("postId") Long postId, @Param("commentId") Long commentId);
 
-    @Select("select user_id as userId, count(comment_id) as count from m_user_action group by user_id")
+    @Select("select user_id as userId, count(comment_id) as count from m_user_action group by user_id order by count desc")
     List<UserReplyListDto> selectUserReply();
 }
