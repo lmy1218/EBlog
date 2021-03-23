@@ -23,7 +23,6 @@ spring:
   data:
     elasticsearch:
       cluster-name: es
-      cluster-nodes: 47.108.237.10:9200
       repositories:
         enabled: true
   rabbitmq:
@@ -47,11 +46,7 @@ logging:
     com.lmy.eblog: DEBUG
     com.lmy.eblog.mapper: DEBUG
 
-yun:
-  endpoint: xxxxx
-  accessKeyId: xxxxxx
-  accessKeySecret: xxxxx
-  bucketName: ferryblog
+
 
 im:
   server:
